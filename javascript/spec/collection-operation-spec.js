@@ -42,7 +42,7 @@ describe("collection operation", function () {
         expect(actual).toEqual(expected);
     });
 
-    fit("查询Score中成绩为85，86或88的记录", () => {
+    it("查询Score中成绩为85，86或88的记录", () => {
         const expected = [
             { sno: 103, cno: '3-245', degree: 86 }, 
             { sno: 105, cno: '3-105', degree: 88 },
@@ -53,8 +53,13 @@ describe("collection operation", function () {
         expect(actual).toEqual(expected);
     });
 
-    it("查询Student中“95031”班或性别为“女”的同学记录", () => {
-        fail("unimplement");
+    fit("查询Student中“95031”班或性别为“女”的同学记录", () => {
+        const expected = [
+            { sno: 109, sname: '王芳', ssex: '女', sbirthday: "1975-02-10", class: 95031 }
+        ];
+
+        const actual = students.filter(student => student.class === 95031 && student.ssex === '女');
+        expect(actual).toEqual(expected);
     });
 
     it("以Class降序查询Student的所有记录", () => {
