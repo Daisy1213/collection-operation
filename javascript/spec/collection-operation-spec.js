@@ -53,7 +53,7 @@ describe("collection operation", function () {
         expect(actual).toEqual(expected);
     });
 
-    fit("查询Student中“95031”班或性别为“女”的同学记录", () => {
+    it("查询Student中“95031”班或性别为“女”的同学记录", () => {
         const expected = [
             { sno: 109, sname: '王芳', ssex: '女', sbirthday: "1975-02-10", class: 95031 }
         ];
@@ -63,15 +63,28 @@ describe("collection operation", function () {
     });
 
     it("以Class降序查询Student的所有记录", () => {
-        fail("unimplement");
+        const expected = [
+            { sno: 108, sname: '曾华', ssex: '男', sbirthday: "1999-09-01", class: 95033 },
+            { sno: 107, sname: '王丽', ssex: '女', sbirthday: "1976-01-23", class: 95033 },
+            { sno: 101, sname: '李军', ssex: '男', sbirthday: "1976-02-20", class: 95033 },
+            { sno: 105, sname: '匡明', ssex: '男', sbirthday: "1975-10-02", class: 95031 },
+            { sno: 109, sname: '王芳', ssex: '女', sbirthday: "1975-02-10", class: 95031 },
+            { sno: 103, sname: '陆君', ssex: '男', sbirthday: "1974-06-03", class: 95031 }
+        ];
+
+        const actual = students.sort((preStudent, nextStudent) => preStudent.class < nextStudent.class);
+        expect(actual).toEqual(expected);
     });
 
     it("以Cno升序、Degree降序查询Score的所有记录", () => {
         fail("unimplement");
     });
 
-    it("查询“95031”班的学生人数", () => {
-        fail("unimplement");
+    fit("查询“95031”班的学生人数", () => {
+        const expected = 3;
+
+        const actual = students.filter(student => student.class === 95301).length;
+        expect(actual).toEqual(actual);
     });
 
     it("查询Score中的最高分的学生学号和课程号", () => {
