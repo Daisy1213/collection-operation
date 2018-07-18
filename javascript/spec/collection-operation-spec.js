@@ -22,7 +22,10 @@ describe("collection operation", function () {
     });
 
     it("查询教师所有的单位中不重复的Depart列", () => {
-        fail("unimplement");
+        const expected = ['计算机系', '电子工程系'];
+
+        const actual = [...new Set (teachers.map(teacher => teacher.depart))];
+        expect(actual).toEqual(expected);
     });
 
     it("查询Student的所有记录", () => {
