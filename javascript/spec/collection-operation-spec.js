@@ -72,27 +72,80 @@ describe("collection operation", function () {
             { sno: 103, sname: '陆君', ssex: '男', sbirthday: "1974-06-03", class: 95031 }
         ];
 
+        const arr = [
+            {x: 2, y: 3},
+            {x: 2, y: 1}, 
+            {x: 1, y: 6},
+            {x: 3, y: 4},
+            {x: 2, y: 5},
+            {x: 4, y: 3}
+         ];
+
+         const result = [
+            {x: 1, y: 6},
+            {x: 2, y: 5},
+            {x: 2, y: 3},
+            {x: 2, y: 1},
+            {x: 3, y: 4},
+            {x: 4, y: 3}
+         ];
+
         const actual = students.sort((preStudent, nextStudent) => preStudent.class < nextStudent.class);
         expect(actual).toEqual(expected);
     });
 
     it("以Cno升序、Degree降序查询Score的所有记录", () => {
+        const arr = [
+            { x: 4, y: 3 },
+            { x: 2, y: 1 },
+            { x: 1, y: 6 },
+            { x: 2, y: 3 },
+            { x: 3, y: 4 },
+            { x: 2, y: 5 },
+            { x: 3, y: 6 },
+            { x: 4, y: 6 }];
+
+        const sort1 = arr.sort((s1, s2) => s1.x - s2.x);
+        console.log(sort1);
+        console.log('------------');
+        const sort2 = sort1.sort((s1, s2) => s2.y - s1.y);
+        console.log(sort2);
         fail("unimplement");
     });
 
-    fit("查询“95031”班的学生人数", () => {
+    it("查询“95031”班的学生人数", () => {
         const expected = 3;
 
         const actual = students.filter(student => student.class === 95301).length;
         expect(actual).toEqual(actual);
     });
 
-    it("查询Score中的最高分的学生学号和课程号", () => {
-        fail("unimplement");
+    fit("查询Score中的最高分的学生学号和课程号", () => {
+        const expected = [{ sno: 103, cno: '3-105'}];
+
+        const degrees = scores.map(score => score.degree);
+        let maxDegree = degrees[0];
+        degrees.forEach((degree) => {
+            if(maxDegree < degree){
+                maxDegree = degree;
+            }  
+        })
+
+        const maxScores = scores.filter(score => score.degree === maxDegree);
+        const actual = maxScores.map(score => {
+            delete score.degree;
+            return score;
+        });
+        expect(actual).toEqual(expected);
     });
 
     it("查询‘3-105’号课程的平均分", () => {
-        fail("unimplement");
+        const expected = 55;
+
+        const allClass = scores.filter(score => score.cno === '3-105');
+        const sumScore = allClass.reduce((pre, next) =>  pre.score + next.score);
+        const actual = sumScore / allClass.length;
+        console.log(actual);
     });
 
     it("查询Score中至少有5名学生选修的并以3开头的课程的平均分数", () => {
