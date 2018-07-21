@@ -120,7 +120,7 @@ describe("collection operation", function () {
         expect(actual).toEqual(actual);
     });
 
-    fit("查询Score中的最高分的学生学号和课程号", () => {
+    it("查询Score中的最高分的学生学号和课程号", () => {
         const expected = [{ sno: 103, cno: '3-105'}];
 
         const degrees = scores.map(score => score.degree);
@@ -139,13 +139,14 @@ describe("collection operation", function () {
         expect(actual).toEqual(expected);
     });
 
-    it("查询‘3-105’号课程的平均分", () => {
-        const expected = 55;
+    fit("查询‘3-105’号课程的平均分", () => {
+        const expected = 81.5;
 
         const allClass = scores.filter(score => score.cno === '3-105');
-        const sumScore = allClass.reduce((pre, next) =>  pre.score + next.score);
+        const allScore = allClass.map(item => item.degree);
+        const sumScore = allScore.reduce((pre, next) =>  pre + next);
         const actual = sumScore / allClass.length;
-        console.log(actual);
+        expect(actual).toEqual(expected);
     });
 
     it("查询Score中至少有5名学生选修的并以3开头的课程的平均分数", () => {
