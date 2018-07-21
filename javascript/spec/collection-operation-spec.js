@@ -1,4 +1,5 @@
 const { teachers, courses, scores, students } = require("../data");
+const Utils = require("../utils");
 
 describe("collection operation", function () {
 
@@ -124,13 +125,8 @@ describe("collection operation", function () {
         const expected = [{ sno: 103, cno: '3-105'}];
 
         const degrees = scores.map(score => score.degree);
-        let maxDegree = degrees[0];
-        degrees.forEach((degree) => {
-            if(maxDegree < degree){
-                maxDegree = degree;
-            }  
-        })
-
+        let maxDegree = Utils.caculateMax(degrees);
+    
         const maxScores = scores.filter(score => score.degree === maxDegree);
         const actual = maxScores.map(score => {
             delete score.degree;
@@ -139,22 +135,62 @@ describe("collection operation", function () {
         expect(actual).toEqual(expected);
     });
 
-    fit("查询‘3-105’号课程的平均分", () => {
+    it("查询‘3-105’号课程的平均分", () => {
         const expected = 81.5;
 
         const allClass = scores.filter(score => score.cno === '3-105');
-        const allScore = allClass.map(item => item.degree);
-        const sumScore = allScore.reduce((pre, next) =>  pre + next);
+        const sumScore = allClass.reduce((accu, cur) =>  accu + cur.degree, 0);
         const actual = sumScore / allClass.length;
         expect(actual).toEqual(expected);
     });
 
     it("查询Score中至少有5名学生选修的并以3开头的课程的平均分数", () => {
-        fail("unimplement");
+        const expected = {'3-105': 81.5}
+
+        let caculateAverage = (numberArr) => {
+            const sumScore = numberArr.reduce((accu, cur) =>  accu + cur.degree, 0);
+            return sumScore /numberArr.length;
+        };
+
+        const classCountMap = scores.reduce((accum, cur) => {
+            accum[cur.cno] ? accum[cur.cno]++ : accum[cur.cno] = 1;
+            return accum;
+        }, {});
+
+        let filterClass = [];
+        for(let key in classCountMap){
+            if( classCountMap[key] >= 5 && key.indexOf('3') === 0){
+                filterClass.push(key);
+            }
+        }
+
+        const actual = filterClass.reduce((accum, curClass) => {
+            const filterScore = scores.filter(score => score.cno === curClass);
+            let average = caculateAverage(filterScore);
+            accum[curClass] = average;
+            return accum;    
+        }, {})
+        expect(actual).toEqual(expected);
     });
 
     it("查询最低分大于70，最高分小于90的Sno列", () => {
-        fail("unimplement");
+        const expected = [105, 108];
+
+        const snoObj = scores.reduce((accum, cur) => {
+            accum[cur.sno] ? accum[cur.sno].push(cur.degree) : accum[cur.sno] = [cur.degree];
+            return accum;
+        }, {});
+
+        const actual = [];
+        for(let sno in snoObj){
+            let maxDegree = Utils.caculateMax(snoObj[sno]);
+            let minDegree = Utils.caculateMin(snoObj[sno]);
+            if(maxDegree < 90 && minDegree > 70){
+                actual.push(Number(sno));
+            }
+        }
+
+        expect(actual).toEqual(expected);
     });
 
     it("查询所有学生的Sname、Cno和Degree列", () => {
@@ -170,7 +206,21 @@ describe("collection operation", function () {
     });
 
     it("查询“95033”班所选课程的平均分", () => {
-        fail("unimplement");
+        const expected = 80;
+
+        const allStudens = students.filter(student => student.class === 95033);
+        let classSumScore = 0;
+        let classSumNum = 0;
+        allStudens.forEach(student => {
+            let oneStudentClass = scores.filter(score => score.sno === student.sno)
+            let oneStudentSumScore = Utils.caculateSum(oneStudentClass, 'degree');
+            classSumNum += oneStudentClass.length;
+            classSumScore += oneStudentSumScore;
+        })
+
+        const actual = Math.round(classSumScore /classSumNum);
+
+        expect(actual).toEqual(expected);
     });
 
     it("现查询所有同学的Sno、Cno和rank列", () => {
