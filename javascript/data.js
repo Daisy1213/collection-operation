@@ -13,7 +13,7 @@ const courses = [
     { cno: '9-888', cname: '高等数学', tno: 100 }];
 
 const scores = [
-    { sno: 103, cno: '3-245', degree: 86 },
+    { sno: 103, cno: '3-245', degree: 86 }, 
     { sno: 105, cno: '3-245', degree: 75 },
     { sno: 109, cno: '3-245', degree: 68 },
     { sno: 103, cno: '3-105', degree: 92 },

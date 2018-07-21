@@ -29,8 +29,17 @@ function caculateSum(numArr, param){
     }, 0);
 }
 
+//对数组元素根据指定条件进行计数
+function caculateRepeateNum(numberArr, param){
+    return numberArr.reduce((accum, cur) => {
+        accum[cur[param]] ? accum[cur[param]]++ : accum[cur[param]] = 1;
+        return accum;
+    }, {})
+}
+
 module.exports = {
     caculateMax,
     caculateMin,
-    caculateSum
+    caculateSum,
+    caculateRepeateNum
 }

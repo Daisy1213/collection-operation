@@ -194,11 +194,61 @@ describe("collection operation", function () {
     });
 
     it("查询所有学生的Sname、Cno和Degree列", () => {
-        fail("unimplement");
+        const expected = [ 
+        { cno: '3-105', degree: 78, sname: '曾华' },
+        { cno: '6-166', degree: 81, sname: '曾华' },
+        { cno: '3-245', degree: 75, sname: '匡明' },
+        { cno: '3-105', degree: 88, sname: '匡明' },
+        { cno: '3-105', degree: 91, sname: '王丽' },
+        { cno: '6-106', degree: 79, sname: '王丽' },
+        { cno: '3-105', degree: 64, sname: '李军' },
+        { cno: '6-166', degree: 85, sname: '李军' },
+        { cno: '3-245', degree: 68, sname: '王芳' },
+        { cno: '3-105', degree: 76, sname: '王芳' },
+        { cno: '3-245', degree: 86, sname: '陆君' },
+        { cno: '3-105', degree: 92, sname: '陆君' } ]
+      
+        let actual = [];
+        students.forEach(student => {
+            let newScore = scores.filter(score => {
+                if(score.sno === student.sno){
+                    delete score.sno;
+                    score.sname = student.sname
+                    return score;
+                }
+
+            })
+           actual.push(...newScore);
+        })
+
+        expect(actual).toEqual(expected);
     });
 
     it("查询所有学生的Sno、Cname和Degree列", () => {
-        fail("unimplement");
+        let actual = [];
+
+        let queryCourseName = (cno) => {
+           let item =  courses.find(course => {
+                if(course.cno === cno){
+                    return course.cname;
+                }
+            });
+            console.log(item, 'dfjafj')
+        };
+
+        students.forEach(student => {
+            let newScore = scores.filter(score => {
+                if(score.sno === student.sno){
+                    score.cname = queryCourseName(score.cno);
+                    return score;
+                }
+
+            })
+           actual.push(...newScore);
+        })
+
+        // console.log(actual)
+        expect(actual).toEqual(expected);
     });
 
     it("查询所有学生的Sname、Cname和Degree列", () => {
@@ -228,15 +278,61 @@ describe("collection operation", function () {
     });
 
     it("查询选修“3-105”课程的成绩高于“109”号同学成绩的所有同学的记录", () => {
-        fail("unimplement");
+        const expected = [ 
+        { sno: 103, cno: '3-105', degree: 92 },
+        { sno: 105, cno: '3-105', degree: 88 },
+        { sno: 107, cno: '3-105', degree: 91 },
+        { sno: 108, cno: '3-105', degree: 78 } ]
+      
+        let specifyClass = scores.filter(score => score.cno === '3-105');
+        let speccifyScore = specifyClass.find(classItem => classItem.sno === 109).degree;
+        let actual = specifyClass.filter(score => score.degree > speccifyScore);
+        expect(actual).toEqual(expected);
     });
 
     it("查询score中选学一门以上课程的同学中分数为非最高分成绩的记录", () => {
-        fail("unimplement");
+        const expected = [
+        { sno: 101, cno: '3-105', degree: 64 },
+        { sno: 101, cno: '6-166', degree: 85 },
+        { sno: 103, cno: '3-245', degree: 86 },
+        { sno: 105, cno: '3-245', degree: 75 },
+        { sno: 105, cno: '3-105', degree: 88 },
+        { sno: 107, cno: '3-105', degree: 91 },
+        { sno: 107, cno: '6-106', degree: 79 },
+        { sno: 108, cno: '3-105', degree: 78 },
+        { sno: 108, cno: '6-166', degree: 81 },
+        { sno: 109, cno: '3-245', degree: 68 },
+        { sno: 109, cno: '3-105', degree: 76 } ]
+      
+        let studentMap = Utils.caculateRepeateNum(scores, 'sno');
+        let allRecords = [];
+        for(let student in studentMap){
+            if(studentMap[student] > 1){
+                let records = scores.filter(score => score.sno == student);
+                allRecords.push(...records);
+            }
+        }
+       let allDegrees = allRecords.map(record => record.degree);
+       let maxDegree = Utils.caculateMax(allDegrees);
+       const actual = allRecords.filter(record => record.degree !== maxDegree);
+
+       expect(actual).toEqual(expected);
     });
 
-    it("查询成绩高于学号为“109”、课程号为“3-105”的成绩的所有记录", () => {
-        fail("unimplement");
+    fit("查询成绩高于学号为“109”、课程号为“3-105”的成绩的所有记录", () => {
+        const expected = [
+        { sno: 103, cno: '3-245', degree: 86 },
+        { sno: 103, cno: '3-105', degree: 92 },
+        { sno: 105, cno: '3-105', degree: 88 },
+        { sno: 107, cno: '3-105', degree: 91 },
+        { sno: 108, cno: '3-105', degree: 78 },
+        { sno: 101, cno: '6-166', degree: 85 },
+        { sno: 107, cno: '6-106', degree: 79 },
+        { sno: 108, cno: '6-166', degree: 81 } ]
+      
+        let specifyRecord = scores.find(score => score.sno === 109 && score.cno === '3-105');
+        const actual = scores.filter(score => score.degree > specifyRecord.degree);
+        expect(actual).toEqual(expected);
     });
 
     it("查询和学号为108的同学同年出生的所有学生的Sno、Sname和Sbirthday列", () => {
