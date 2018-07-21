@@ -1,7 +1,7 @@
 const { teachers, courses, scores, students } = require("../data");
 const Utils = require("../utils");
 
-describe("collection operation", function () {
+describe("collection operation", function() {
 
     it("查询student中的所有记录的sname、Ssex和class列", () => {
         const expected = [
@@ -14,18 +14,17 @@ describe("collection operation", function () {
         ];
 
         const actual = students.map(student => ({
-                sname: student.sname,
-                ssex: student.ssex,
-                class: student.class
-            }
-        ));
+            sname: student.sname,
+            ssex: student.ssex,
+            class: student.class
+        }));
         expect(actual).toEqual(expected);
     });
 
     it("查询教师所有的单位中不重复的Depart列", () => {
         const expected = ['计算机系', '电子工程系'];
 
-        const actual = [...new Set (teachers.map(teacher => teacher.depart))];
+        const actual = [...new Set(teachers.map(teacher => teacher.depart))];
         expect(actual).toEqual(expected);
     });
 
@@ -45,7 +44,7 @@ describe("collection operation", function () {
 
     it("查询Score中成绩为85，86或88的记录", () => {
         const expected = [
-            { sno: 103, cno: '3-245', degree: 86 }, 
+            { sno: 103, cno: '3-245', degree: 86 },
             { sno: 105, cno: '3-105', degree: 88 },
             { sno: 101, cno: '6-166', degree: 85 }
         ];
@@ -74,22 +73,22 @@ describe("collection operation", function () {
         ];
 
         const arr = [
-            {x: 2, y: 3},
-            {x: 2, y: 1}, 
-            {x: 1, y: 6},
-            {x: 3, y: 4},
-            {x: 2, y: 5},
-            {x: 4, y: 3}
-         ];
+            { x: 2, y: 3 },
+            { x: 2, y: 1 },
+            { x: 1, y: 6 },
+            { x: 3, y: 4 },
+            { x: 2, y: 5 },
+            { x: 4, y: 3 }
+        ];
 
-         const result = [
-            {x: 1, y: 6},
-            {x: 2, y: 5},
-            {x: 2, y: 3},
-            {x: 2, y: 1},
-            {x: 3, y: 4},
-            {x: 4, y: 3}
-         ];
+        const result = [
+            { x: 1, y: 6 },
+            { x: 2, y: 5 },
+            { x: 2, y: 3 },
+            { x: 2, y: 1 },
+            { x: 3, y: 4 },
+            { x: 4, y: 3 }
+        ];
 
         const actual = students.sort((preStudent, nextStudent) => preStudent.class < nextStudent.class);
         expect(actual).toEqual(expected);
@@ -104,7 +103,8 @@ describe("collection operation", function () {
             { x: 3, y: 4 },
             { x: 2, y: 5 },
             { x: 3, y: 6 },
-            { x: 4, y: 6 }];
+            { x: 4, y: 6 }
+        ];
 
         const sort1 = arr.sort((s1, s2) => s1.x - s2.x);
         console.log(sort1);
@@ -122,11 +122,11 @@ describe("collection operation", function () {
     });
 
     it("查询Score中的最高分的学生学号和课程号", () => {
-        const expected = [{ sno: 103, cno: '3-105'}];
+        const expected = [{ sno: 103, cno: '3-105' }];
 
         const degrees = scores.map(score => score.degree);
         let maxDegree = Utils.caculateMax(degrees);
-    
+
         const maxScores = scores.filter(score => score.degree === maxDegree);
         const actual = maxScores.map(score => {
             delete score.degree;
@@ -139,17 +139,17 @@ describe("collection operation", function () {
         const expected = 81.5;
 
         const allClass = scores.filter(score => score.cno === '3-105');
-        const sumScore = allClass.reduce((accu, cur) =>  accu + cur.degree, 0);
+        const sumScore = allClass.reduce((accu, cur) => accu + cur.degree, 0);
         const actual = sumScore / allClass.length;
         expect(actual).toEqual(expected);
     });
 
     it("查询Score中至少有5名学生选修的并以3开头的课程的平均分数", () => {
-        const expected = {'3-105': 81.5}
+        const expected = { '3-105': 81.5 }
 
         let caculateAverage = (numberArr) => {
-            const sumScore = numberArr.reduce((accu, cur) =>  accu + cur.degree, 0);
-            return sumScore /numberArr.length;
+            const sumScore = numberArr.reduce((accu, cur) => accu + cur.degree, 0);
+            return sumScore / numberArr.length;
         };
 
         const classCountMap = scores.reduce((accum, cur) => {
@@ -158,8 +158,8 @@ describe("collection operation", function () {
         }, {});
 
         let filterClass = [];
-        for(let key in classCountMap){
-            if( classCountMap[key] >= 5 && key.indexOf('3') === 0){
+        for (let key in classCountMap) {
+            if (classCountMap[key] >= 5 && key.indexOf('3') === 0) {
                 filterClass.push(key);
             }
         }
@@ -168,7 +168,7 @@ describe("collection operation", function () {
             const filterScore = scores.filter(score => score.cno === curClass);
             let average = caculateAverage(filterScore);
             accum[curClass] = average;
-            return accum;    
+            return accum;
         }, {})
         expect(actual).toEqual(expected);
     });
@@ -182,10 +182,10 @@ describe("collection operation", function () {
         }, {});
 
         const actual = [];
-        for(let sno in snoObj){
+        for (let sno in snoObj) {
             let maxDegree = Utils.caculateMax(snoObj[sno]);
             let minDegree = Utils.caculateMin(snoObj[sno]);
-            if(maxDegree < 90 && minDegree > 70){
+            if (maxDegree < 90 && minDegree > 70) {
                 actual.push(Number(sno));
             }
         }
@@ -194,31 +194,32 @@ describe("collection operation", function () {
     });
 
     it("查询所有学生的Sname、Cno和Degree列", () => {
-        const expected = [ 
-        { cno: '3-105', degree: 78, sname: '曾华' },
-        { cno: '6-166', degree: 81, sname: '曾华' },
-        { cno: '3-245', degree: 75, sname: '匡明' },
-        { cno: '3-105', degree: 88, sname: '匡明' },
-        { cno: '3-105', degree: 91, sname: '王丽' },
-        { cno: '6-106', degree: 79, sname: '王丽' },
-        { cno: '3-105', degree: 64, sname: '李军' },
-        { cno: '6-166', degree: 85, sname: '李军' },
-        { cno: '3-245', degree: 68, sname: '王芳' },
-        { cno: '3-105', degree: 76, sname: '王芳' },
-        { cno: '3-245', degree: 86, sname: '陆君' },
-        { cno: '3-105', degree: 92, sname: '陆君' } ]
-      
+        const expected = [
+            { cno: '3-105', degree: 78, sname: '曾华' },
+            { cno: '6-166', degree: 81, sname: '曾华' },
+            { cno: '3-245', degree: 75, sname: '匡明' },
+            { cno: '3-105', degree: 88, sname: '匡明' },
+            { cno: '3-105', degree: 91, sname: '王丽' },
+            { cno: '6-106', degree: 79, sname: '王丽' },
+            { cno: '3-105', degree: 64, sname: '李军' },
+            { cno: '6-166', degree: 85, sname: '李军' },
+            { cno: '3-245', degree: 68, sname: '王芳' },
+            { cno: '3-105', degree: 76, sname: '王芳' },
+            { cno: '3-245', degree: 86, sname: '陆君' },
+            { cno: '3-105', degree: 92, sname: '陆君' }
+        ]
+
         let actual = [];
         students.forEach(student => {
             let newScore = scores.filter(score => {
-                if(score.sno === student.sno){
+                if (score.sno === student.sno) {
                     delete score.sno;
                     score.sname = student.sname
                     return score;
                 }
 
             })
-           actual.push(...newScore);
+            actual.push(...newScore);
         })
 
         expect(actual).toEqual(expected);
@@ -228,8 +229,8 @@ describe("collection operation", function () {
         let actual = [];
 
         let queryCourseName = (cno) => {
-           let item =  courses.find(course => {
-                if(course.cno === cno){
+            let item = courses.find(course => {
+                if (course.cno === cno) {
                     return course.cname;
                 }
             });
@@ -238,13 +239,13 @@ describe("collection operation", function () {
 
         students.forEach(student => {
             let newScore = scores.filter(score => {
-                if(score.sno === student.sno){
+                if (score.sno === student.sno) {
                     score.cname = queryCourseName(score.cno);
                     return score;
                 }
 
             })
-           actual.push(...newScore);
+            actual.push(...newScore);
         })
 
         // console.log(actual)
@@ -268,7 +269,7 @@ describe("collection operation", function () {
             classSumScore += oneStudentSumScore;
         })
 
-        const actual = Math.round(classSumScore /classSumNum);
+        const actual = Math.round(classSumScore / classSumNum);
 
         expect(actual).toEqual(expected);
     });
@@ -278,12 +279,13 @@ describe("collection operation", function () {
     });
 
     it("查询选修“3-105”课程的成绩高于“109”号同学成绩的所有同学的记录", () => {
-        const expected = [ 
-        { sno: 103, cno: '3-105', degree: 92 },
-        { sno: 105, cno: '3-105', degree: 88 },
-        { sno: 107, cno: '3-105', degree: 91 },
-        { sno: 108, cno: '3-105', degree: 78 } ]
-      
+        const expected = [
+            { sno: 103, cno: '3-105', degree: 92 },
+            { sno: 105, cno: '3-105', degree: 88 },
+            { sno: 107, cno: '3-105', degree: 91 },
+            { sno: 108, cno: '3-105', degree: 78 }
+        ]
+
         let specifyClass = scores.filter(score => score.cno === '3-105');
         let speccifyScore = specifyClass.find(classItem => classItem.sno === 109).degree;
         let actual = specifyClass.filter(score => score.degree > speccifyScore);
@@ -292,44 +294,46 @@ describe("collection operation", function () {
 
     it("查询score中选学一门以上课程的同学中分数为非最高分成绩的记录", () => {
         const expected = [
-        { sno: 101, cno: '3-105', degree: 64 },
-        { sno: 101, cno: '6-166', degree: 85 },
-        { sno: 103, cno: '3-245', degree: 86 },
-        { sno: 105, cno: '3-245', degree: 75 },
-        { sno: 105, cno: '3-105', degree: 88 },
-        { sno: 107, cno: '3-105', degree: 91 },
-        { sno: 107, cno: '6-106', degree: 79 },
-        { sno: 108, cno: '3-105', degree: 78 },
-        { sno: 108, cno: '6-166', degree: 81 },
-        { sno: 109, cno: '3-245', degree: 68 },
-        { sno: 109, cno: '3-105', degree: 76 } ]
-      
+            { sno: 101, cno: '3-105', degree: 64 },
+            { sno: 101, cno: '6-166', degree: 85 },
+            { sno: 103, cno: '3-245', degree: 86 },
+            { sno: 105, cno: '3-245', degree: 75 },
+            { sno: 105, cno: '3-105', degree: 88 },
+            { sno: 107, cno: '3-105', degree: 91 },
+            { sno: 107, cno: '6-106', degree: 79 },
+            { sno: 108, cno: '3-105', degree: 78 },
+            { sno: 108, cno: '6-166', degree: 81 },
+            { sno: 109, cno: '3-245', degree: 68 },
+            { sno: 109, cno: '3-105', degree: 76 }
+        ]
+
         let studentMap = Utils.caculateRepeateNum(scores, 'sno');
         let allRecords = [];
-        for(let student in studentMap){
-            if(studentMap[student] > 1){
+        for (let student in studentMap) {
+            if (studentMap[student] > 1) {
                 let records = scores.filter(score => score.sno == student);
                 allRecords.push(...records);
             }
         }
-       let allDegrees = allRecords.map(record => record.degree);
-       let maxDegree = Utils.caculateMax(allDegrees);
-       const actual = allRecords.filter(record => record.degree !== maxDegree);
+        let allDegrees = allRecords.map(record => record.degree);
+        let maxDegree = Utils.caculateMax(allDegrees);
+        const actual = allRecords.filter(record => record.degree !== maxDegree);
 
-       expect(actual).toEqual(expected);
+        expect(actual).toEqual(expected);
     });
 
     fit("查询成绩高于学号为“109”、课程号为“3-105”的成绩的所有记录", () => {
         const expected = [
-        { sno: 103, cno: '3-245', degree: 86 },
-        { sno: 103, cno: '3-105', degree: 92 },
-        { sno: 105, cno: '3-105', degree: 88 },
-        { sno: 107, cno: '3-105', degree: 91 },
-        { sno: 108, cno: '3-105', degree: 78 },
-        { sno: 101, cno: '6-166', degree: 85 },
-        { sno: 107, cno: '6-106', degree: 79 },
-        { sno: 108, cno: '6-166', degree: 81 } ]
-      
+            { sno: 103, cno: '3-245', degree: 86 },
+            { sno: 103, cno: '3-105', degree: 92 },
+            { sno: 105, cno: '3-105', degree: 88 },
+            { sno: 107, cno: '3-105', degree: 91 },
+            { sno: 108, cno: '3-105', degree: 78 },
+            { sno: 101, cno: '6-166', degree: 85 },
+            { sno: 107, cno: '6-106', degree: 79 },
+            { sno: 108, cno: '6-166', degree: 81 }
+        ]
+
         let specifyRecord = scores.find(score => score.sno === 109 && score.cno === '3-105');
         const actual = scores.filter(score => score.degree > specifyRecord.degree);
         expect(actual).toEqual(expected);
