@@ -1,21 +1,10 @@
-function max(numArr){
-    let maxNum = numArr[0];
-    numArr.forEach((num) => {
-        if(maxNum < num){
-            maxNum = num;
-        }  
-    });
-    return maxNum;
+
+function max(dataArr){
+    return dataArr.reduce((acc, cur) => acc > cur ? acc : cur);
 }
 
-function min(numArr){
-    let minNum = numArr[0];
-    numArr.forEach((num) => {
-        if(minNum > num){
-            minNum = num;
-        }  
-    });
-    return minNum;
+function min(dataArr){
+    return dataArr.reduce((acc, cur) => acc < cur ? acc : cur);
 }
 
 //param：求数组中对象指定属性值的和
