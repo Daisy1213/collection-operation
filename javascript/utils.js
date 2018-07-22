@@ -18,6 +18,10 @@ function sum(numArr, param){
     }, 0);
 }
 
+function average(dataArr, param){
+    return sum(dataArr, param) / dataArr.length;
+}
+
 //对数组元素根据指定条件进行计数
 function caculateRepeateNum(numberArr, param){
     return numberArr.reduce((accum, cur) => {
@@ -30,5 +34,6 @@ module.exports = {
     max,
     min,
     sum,
+    average,
     caculateRepeateNum
 };

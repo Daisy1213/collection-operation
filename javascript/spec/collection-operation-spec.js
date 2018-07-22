@@ -123,36 +123,33 @@ describe('collection operation', function() {
         const expected = 81.5;
 
         const scoresOf3105 = scores.filter(score => score.cno === '3-105');
-        const actual = Utils.sum(scoresOf3105, 'degree') / scoresOf3105.length;
+        const actual = Utils.average(scoresOf3105, 'degree');
         expect(actual).toEqual(expected);
     });
 
     it('查询Score中至少有5名学生选修的并以3开头的课程的平均分数', () => {
-        const expected = { '3-105': 81.5 };
+        const expected = [{ cno: '3-105', average: 81.5 }];
 
-        let caculateAverage = (numberArr) => {
-            const sumScore = numberArr.reduce((accu, cur) => accu + cur.degree, 0);
-            return sumScore / numberArr.length;
-        };
-
-        const classCountMap = scores.reduce((accum, cur) => {
+        const groupByCno = scores.reduce((accum, cur) => {
             accum[cur.cno] ? accum[cur.cno]++ : accum[cur.cno] = 1;
             return accum;
         }, {});
 
-        let filterClass = [];
-        for (let key in classCountMap) {
-            if (classCountMap[key] >= 5 && key.indexOf('3') === 0) {
-                filterClass.push(key);
+        let specifyCnos = [];
+        for (let key in groupByCno) {
+            if (groupByCno[key] >= 5 && key.startsWith('3')) {
+                specifyCnos.push(key);
             }
         }
 
-        const actual = filterClass.reduce((accum, curClass) => {
-            const filterScore = scores.filter(score => score.cno === curClass);
-            let average = caculateAverage(filterScore);
-            accum[curClass] = average;
-            return accum;
-        }, {});
+        const actual = specifyCnos.map(cno => {
+            const recordsOfCno = scores.filter(score => score.cno === cno);
+            const average = Utils.average(recordsOfCno, 'degree');
+            return {
+                cno,
+                average
+            };
+        });
         expect(actual).toEqual(expected);
     });
 
