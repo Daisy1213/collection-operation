@@ -191,41 +191,41 @@ describe('collection operation', function() {
 
         const actual = students.map(student => ({
             sname: student.sname,
-            scores: scores.filter(score => score.sno === student.sno)
-        })).map(record => {
-            return record.scores.map(score => ({
-                sname: record.sname,
-                cno: score.cno,
-                degree: score.degree
-            }));
-        }).reduce((acc, cur) => acc.concat(cur), []);
+            scores: scores.filter(scoreRecord => scoreRecord.sno === student.sno)
+                .map(score => ({
+                    sname: student.sname,
+                    cno: score.cno,
+                    degree: score.degree
+                }))
+        })).reduce((acc, cur) => acc.concat(cur.scores), []);
 
         expect(actual).toEqual(expected);
     });
 
     it('查询所有学生的Sno、Cname和Degree列', () => {
-        const expected = [];
+        const expected = [
+            { sno: 108, cname: '计算机导论', degree: 78 },
+            { sno: 108, cname: '数据电路', degree: 81 },
+            { sno: 105, cname: '操作系统', degree: 75 },
+            { sno: 105, cname: '计算机导论', degree: 88 },
+            { sno: 107, cname: '计算机导论', degree: 91 },
+            { sno: 107, cname: undefined, degree: 79 },
+            { sno: 101, cname: '计算机导论', degree: 64 },
+            { sno: 101, cname: '数据电路', degree: 85 },
+            { sno: 109, cname: '操作系统', degree: 68 },
+            { sno: 109, cname: '计算机导论', degree: 76 },
+            { sno: 103, cname: '操作系统', degree: 86 },
+            { sno: 103, cname: '计算机导论', degree: 92 },
+        ];
 
-        let actual = [];
-
-        let queryCourseName = (cno) => {
-            courses.find(course => {
-                if (course.cno === cno) {
-                    return course.cname;
-                }
-            });
-        };
-
-        students.forEach(student => {
-            let newScore = scores.filter(score => {
-                if (score.sno === student.sno) {
-                    score.cname = queryCourseName(score.cno);
-                    return score;
-                }
-
-            });
-            actual.push(...newScore);
-        });
+        const actual = students.map(student => {
+            return scores.filter(scoreRecord => scoreRecord.sno === student.sno)
+                .map(score => ({
+                    sno: score.sno,
+                    cname: (courses.find(cours => cours.cno === score.cno) || {}).cname,
+                    degree: score.degree
+                }));
+        }).reduce((acc, cur) => acc.concat(cur), []);
 
         expect(actual).toEqual(expected);
     });
