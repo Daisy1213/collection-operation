@@ -20,7 +20,7 @@ const scores = [
     { sno: 105, cno: '3-105', degree: 88 },
     { sno: 109, cno: '3-105', degree: 76 },
     { sno: 101, cno: '3-105', degree: 64 },
-    { sno: 107, cno: '3-105', degree: 91 },
+    { sno: 107, cno: '3-105', degree: 91 }, 
     { sno: 108, cno: '3-105', degree: 78 },
     { sno: 101, cno: '6-166', degree: 85 },
     { sno: 107, cno: '6-106', degree: 79 },

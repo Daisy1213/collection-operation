@@ -259,18 +259,12 @@ describe('collection operation', function() {
     it('查询“95033”班所选课程的平均分', () => {
         const expected = 80;
 
-        const allStudens = students.filter(student => student.class === 95033);
-        let classSumScore = 0;
-        let classSumNum = 0;
-        allStudens.forEach(student => {
-            let oneStudentClass = scores.filter(score => score.sno === student.sno);
-            let oneStudentSumScore = Utils.caculateSum(oneStudentClass, 'degree');
-            classSumNum += oneStudentClass.length;
-            classSumScore += oneStudentSumScore;
-        });
+        const studentsOf95033 = students.filter(student => student.class === 95033);
+        const scoresOf95033 = studentsOf95033.map(student => {
+            return scores.filter(score => score.sno === student.sno);
+        }).reduce((acc, cur) => acc.concat(cur), []);
 
-        const actual = Math.round(classSumScore / classSumNum);
-
+        const actual = Math.round(Utils.average(scoresOf95033, 'degree'));
         expect(actual).toEqual(expected);
     });
 
