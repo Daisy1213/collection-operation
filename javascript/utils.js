@@ -8,7 +8,7 @@ function min(dataArr){
 }
 
 //param：求数组中对象指定属性值的和
-function caculateSum(numArr, param){
+function sum(numArr, param){
     return numArr.reduce((accu, cur) => {
         if(param) {
             return accu + cur[param];
@@ -29,6 +29,6 @@ function caculateRepeateNum(numberArr, param){
 module.exports = {
     max,
     min,
-    caculateSum,
+    sum,
     caculateRepeateNum
 };

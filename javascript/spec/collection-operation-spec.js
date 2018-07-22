@@ -122,9 +122,8 @@ describe('collection operation', function() {
     it('查询‘3-105’号课程的平均分', () => {
         const expected = 81.5;
 
-        const allClass = scores.filter(score => score.cno === '3-105');
-        const sumScore = allClass.reduce((accu, cur) => accu + cur.degree, 0);
-        const actual = sumScore / allClass.length;
+        const scoresOf3105 = scores.filter(score => score.cno === '3-105');
+        const actual = Utils.sum(scoresOf3105, 'degree') / scoresOf3105.length;
         expect(actual).toEqual(expected);
     });
 
