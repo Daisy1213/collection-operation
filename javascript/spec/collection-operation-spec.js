@@ -175,32 +175,30 @@ describe('collection operation', function() {
 
     it('查询所有学生的Sname、Cno和Degree列', () => {
         const expected = [
-            {cno: '3-105', degree: 78, sname: '曾华'},
-            {cno: '6-166', degree: 81, sname: '曾华'},
-            {cno: '3-245', degree: 75, sname: '匡明'},
-            {cno: '3-105', degree: 88, sname: '匡明'},
-            {cno: '3-105', degree: 91, sname: '王丽'},
-            {cno: '6-106', degree: 79, sname: '王丽'},
-            {cno: '3-105', degree: 64, sname: '李军'},
-            {cno: '6-166', degree: 85, sname: '李军'},
-            {cno: '3-245', degree: 68, sname: '王芳'},
-            {cno: '3-105', degree: 76, sname: '王芳'},
-            {cno: '3-245', degree: 86, sname: '陆君'},
-            {cno: '3-105', degree: 92, sname: '陆君'}
+            { sname: '曾华', cno: '3-105', degree: 78 },
+            { sname: '曾华', cno: '6-166', degree: 81 },
+            { sname: '匡明', cno: '3-245', degree: 75 },
+            { sname: '匡明', cno: '3-105', degree: 88 },
+            { sname: '王丽', cno: '3-105', degree: 91 },
+            { sname: '王丽', cno: '6-106', degree: 79 },
+            { sname: '李军', cno: '3-105', degree: 64 },
+            { sname: '李军', cno: '6-166', degree: 85 },
+            { sname: '王芳', cno: '3-245', degree: 68 },
+            { sname: '王芳', cno: '3-105', degree: 76 },
+            { sname: '陆君', cno: '3-245', degree: 86 },
+            { sname: '陆君', cno: '3-105', degree: 92 }
         ];
 
-        let actual = [];
-        students.forEach(student => {
-            let newScore = scores.filter(score => {
-                if (score.sno === student.sno) {
-                    delete score.sno;
-                    score.sname = student.sname;
-                    return score;
-                }
-
-            });
-            actual.push(...newScore);
-        });
+        const actual = students.map(student => ({
+            sname: student.sname,
+            scores: scores.filter(score => score.sno === student.sno)
+        })).map(record => {
+            return record.scores.map(score => ({
+                sname: record.sname,
+                cno: score.cno,
+                degree: score.degree
+            }));
+        }).reduce((acc, cur) => acc.concat(cur), []);
 
         expect(actual).toEqual(expected);
     });
