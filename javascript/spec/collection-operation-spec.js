@@ -24,7 +24,8 @@ describe('collection operation', function() {
     it('查询教师所有的单位中不重复的Depart列', () => {
         const expected = ['计算机系', '电子工程系'];
 
-        const actual = [...new Set(teachers.map(teacher => teacher.depart))];
+        const unique = (departs) => [...new Set(departs)];
+        const actual = unique(teachers.map(teacher => teacher.depart));
         expect(actual).toEqual(expected);
     });
 
@@ -72,53 +73,32 @@ describe('collection operation', function() {
             { sno: 103, sname: '陆君', ssex: '男', sbirthday: '1974-06-03', class: 95031 }
         ];
 
-        const arr = [
-            { x: 2, y: 3 },
-            { x: 2, y: 1 },
-            { x: 1, y: 6 },
-            { x: 3, y: 4 },
-            { x: 2, y: 5 },
-            { x: 4, y: 3 }
-        ];
-
-        const result = [
-            { x: 1, y: 6 },
-            { x: 2, y: 5 },
-            { x: 2, y: 3 },
-            { x: 2, y: 1 },
-            { x: 3, y: 4 },
-            { x: 4, y: 3 }
-        ];
-
         const actual = students.sort((preStudent, nextStudent) => preStudent.class < nextStudent.class);
         expect(actual).toEqual(expected);
     });
 
     it('以Cno升序、Degree降序查询Score的所有记录', () => {
-        const arr = [
-            { x: 4, y: 3 },
-            { x: 2, y: 1 },
-            { x: 1, y: 6 },
-            { x: 2, y: 3 },
-            { x: 3, y: 4 },
-            { x: 2, y: 5 },
-            { x: 3, y: 6 },
-            { x: 4, y: 6 }
-        ];
+        // const arr = [
+        //     { x: 4, y: 3 },
+        //     { x: 2, y: 1 },
+        //     { x: 1, y: 6 },
+        //     { x: 2, y: 3 },
+        //     { x: 3, y: 4 },
+        //     { x: 2, y: 5 },
+        //     { x: 3, y: 6 },
+        //     { x: 4, y: 6 }
+        // ];
 
-        const sort1 = arr.sort((s1, s2) => s1.x - s2.x);
-        console.log(sort1);
-        console.log('------------');
-        const sort2 = sort1.sort((s1, s2) => s2.y - s1.y);
-        console.log(sort2);
-        fail('unimplement');
+        // const sort1 = arr.sort((s1, s2) => s1.x - s2.x);
+        // const sort2 = sort1.sort((s1, s2) => s2.y - s1.y);
+        // fail('unimplement');
     });
 
     it('查询“95031”班的学生人数', () => {
         const expected = 3;
 
         const actual = students.filter(student => student.class === 95301).length;
-        expect(actual).toEqual(actual);
+        expect(actual).toEqual(expected);
     });
 
     it('查询Score中的最高分的学生学号和课程号', () => {
@@ -226,15 +206,16 @@ describe('collection operation', function() {
     });
 
     it('查询所有学生的Sno、Cname和Degree列', () => {
+        const expected = [];
+
         let actual = [];
 
         let queryCourseName = (cno) => {
-            let item = courses.find(course => {
+            courses.find(course => {
                 if (course.cno === cno) {
                     return course.cname;
                 }
             });
-            console.log(item, 'dfjafj');
         };
 
         students.forEach(student => {
@@ -248,7 +229,6 @@ describe('collection operation', function() {
             actual.push(...newScore);
         });
 
-        // console.log(actual)
         expect(actual).toEqual(expected);
     });
 
@@ -322,7 +302,7 @@ describe('collection operation', function() {
         expect(actual).toEqual(expected);
     });
 
-    fit('查询成绩高于学号为“109”、课程号为“3-105”的成绩的所有记录', () => {
+    it('查询成绩高于学号为“109”、课程号为“3-105”的成绩的所有记录', () => {
         const expected = [
             { sno: 103, cno: '3-245', degree: 86 },
             { sno: 103, cno: '3-105', degree: 92 },
