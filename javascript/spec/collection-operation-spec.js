@@ -189,15 +189,14 @@ describe('collection operation', function() {
             { sname: '陆君', cno: '3-105', degree: 92 }
         ];
 
-        const actual = students.map(student => ({
-            sname: student.sname,
-            scores: scores.filter(scoreRecord => scoreRecord.sno === student.sno)
+        const actual = students.map(student => {
+            return scores.filter(scoreRecord => scoreRecord.sno === student.sno)
                 .map(score => ({
                     sname: student.sname,
                     cno: score.cno,
                     degree: score.degree
-                }))
-        })).reduce((acc, cur) => acc.concat(cur.scores), []);
+                }));
+        }).reduce((acc, cur) => acc.concat(cur), []);
 
         expect(actual).toEqual(expected);
     });
@@ -231,7 +230,30 @@ describe('collection operation', function() {
     });
 
     it('查询所有学生的Sname、Cname和Degree列', () => {
-        fail('unimplement');
+        const expected = [
+            { sname: '曾华', cname: '计算机导论', degree: 78 },
+            { sname: '曾华', cname: '数据电路', degree: 81 },
+            { sname: '匡明', cname: '操作系统', degree: 75 },
+            { sname: '匡明', cname: '计算机导论', degree: 88 },
+            { sname: '王丽', cname: '计算机导论', degree: 91 },
+            { sname: '王丽', cname: undefined, degree: 79 },
+            { sname: '李军', cname: '计算机导论', degree: 64 },
+            { sname: '李军', cname: '数据电路', degree: 85 },
+            { sname: '王芳', cname: '操作系统', degree: 68 },
+            { sname: '王芳', cname: '计算机导论', degree: 76 },
+            { sname: '陆君', cname: '操作系统', degree: 86 },
+            { sname: '陆君', cname: '计算机导论', degree: 92 }
+        ];
+
+        const actual = students.map(student => {
+            return scores.filter(scoreRecord => scoreRecord.sno === student.sno)
+                .map(score => ({
+                    sname: student.sname,
+                    cname: (courses.find(cours => cours.cno === score.cno) || {}).cname,
+                    degree: score.degree
+                }));
+        }).reduce((acc, cur) => acc.concat(cur), []);
+        expect(actual).toEqual(expected);
     });
 
     it('查询“95033”班所选课程的平均分', () => {
