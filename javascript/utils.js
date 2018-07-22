@@ -4,7 +4,7 @@ function caculateMax(numArr){
         if(maxNum < num){
             maxNum = num;
         }  
-    })
+    });
     return maxNum;
 }
 
@@ -14,7 +14,7 @@ function caculateMin(numArr){
         if(minNum > num){
             minNum = num;
         }  
-    })
+    });
     return minNum;
 }
 
@@ -34,7 +34,7 @@ function caculateRepeateNum(numberArr, param){
     return numberArr.reduce((accum, cur) => {
         accum[cur[param]] ? accum[cur[param]]++ : accum[cur[param]] = 1;
         return accum;
-    }, {})
+    }, {});
 }
 
 module.exports = {
@@ -42,4 +42,4 @@ module.exports = {
     caculateMin,
     caculateSum,
     caculateRepeateNum
-}
+};

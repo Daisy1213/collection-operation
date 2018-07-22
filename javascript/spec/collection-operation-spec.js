@@ -56,10 +56,14 @@ describe('collection operation', function() {
 
     it('查询Student中“95031”班或性别为“女”的同学记录', () => {
         const expected = [
-            { sno: 109, sname: '王芳', ssex: '女', sbirthday: '1975-02-10', class: 95031 }
+            { sno: 105, sname: '匡明', ssex: '男', sbirthday: '1975-10-02', class: 95031 },
+            { sno: 107, sname: '王丽', ssex: '女', sbirthday: '1976-01-23', class: 95033 },
+            { sno: 109, sname: '王芳', ssex: '女', sbirthday: '1975-02-10', class: 95031 },
+            { sno: 103, sname: '陆君', ssex: '男', sbirthday: '1974-06-03', class: 95031 },
+
         ];
 
-        const actual = students.filter(student => student.class === 95031 && student.ssex === '女');
+        const actual = students.filter(student => student.class === 95031 || student.ssex === '女');
         expect(actual).toEqual(expected);
     });
 
