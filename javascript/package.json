@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jasmine"
+    "test": "jasmine & npm run eslint",
+    "eslint": "eslint ./spec/*.* --fix"
   },
   "author": "Afaren",
   "license": "ISC",
   "devDependencies": {
+    "eslint": "^5.2.0",
     "jasmine": "^3.1.0"
   }
 }
