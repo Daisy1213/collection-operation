@@ -1,4 +1,4 @@
-function caculateMax(numArr){
+function max(numArr){
     let maxNum = numArr[0];
     numArr.forEach((num) => {
         if(maxNum < num){
@@ -8,7 +8,7 @@ function caculateMax(numArr){
     return maxNum;
 }
 
-function caculateMin(numArr){
+function min(numArr){
     let minNum = numArr[0];
     numArr.forEach((num) => {
         if(minNum > num){
@@ -38,8 +38,8 @@ function caculateRepeateNum(numberArr, param){
 }
 
 module.exports = {
-    caculateMax,
-    caculateMin,
+    max,
+    min,
     caculateSum,
     caculateRepeateNum
 };

@@ -109,13 +109,13 @@ describe('collection operation', function() {
         const expected = [{ sno: 103, cno: '3-105' }];
 
         const degrees = scores.map(score => score.degree);
-        let maxDegree = Utils.caculateMax(degrees);
+        let maxDegree = Utils.max(degrees);
 
-        const maxScores = scores.filter(score => score.degree === maxDegree);
-        const actual = maxScores.map(score => {
-            delete score.degree;
-            return score;
-        });
+        const actual = scores.filter(score => score.degree === maxDegree)
+            .map(score => ({
+                sno: score.sno,
+                cno: score.cno
+            }));
         expect(actual).toEqual(expected);
     });
 
