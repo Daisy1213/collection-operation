@@ -77,7 +77,7 @@ describe('collection operation', function() {
             { sno: 103, sname: '陆君', ssex: '男', sbirthday: '1974-06-03', class: 95031 }
         ];
 
-        const actual = students.sort((preStudent, nextStudent) => preStudent.class < nextStudent.class);
+        const actual = students.sort((a, b) => a.class <  b.class);
         expect(actual).toEqual(expected);
     });
 
