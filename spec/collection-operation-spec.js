@@ -3,21 +3,21 @@ const chai = require('chai');
 
 chai.use(deepEqualInAnyOrder);
 
-const { expect } = chai;
+const {expect} = chai;
 
-const { teachers, courses, scores, students } = require('../data');
+const {teachers, courses, scores, students} = require('../data');
 const Utils = require('../utils');
 
-describe('collection operation', function() {
+describe('collection operation', function () {
 
     test('查询student中的所有记录的sname、Ssex和class列', () => {
         const expected = [
-            { sname: '曾华', ssex: '男', class: 95033 },
-            { sname: '匡明', ssex: '男', class: 95031 },
-            { sname: '王丽', ssex: '女', class: 95033 },
-            { sname: '李军', ssex: '男', class: 95033 },
-            { sname: '王芳', ssex: '女', class: 95031 },
-            { sname: '陆君', ssex: '男', class: 95031 }
+            {sname: '曾华', ssex: '男', class: 95033},
+            {sname: '匡明', ssex: '男', class: 95031},
+            {sname: '王丽', ssex: '女', class: 95033},
+            {sname: '李军', ssex: '男', class: 95033},
+            {sname: '王芳', ssex: '女', class: 95031},
+            {sname: '陆君', ssex: '男', class: 95031}
         ];
 
         const actual = students.map(student => ({
@@ -38,12 +38,12 @@ describe('collection operation', function() {
 
     test('查询Score中成绩在60到80之间的所有记录', () => {
         const expected = [
-            { sno: 105, cno: '3-245', degree: 75 },
-            { sno: 109, cno: '3-245', degree: 68 },
-            { sno: 109, cno: '3-105', degree: 76 },
-            { sno: 101, cno: '3-105', degree: 64 },
-            { sno: 108, cno: '3-105', degree: 78 },
-            { sno: 107, cno: '6-106', degree: 79 },
+            {sno: 105, cno: '3-245', degree: 75},
+            {sno: 109, cno: '3-245', degree: 68},
+            {sno: 109, cno: '3-105', degree: 76},
+            {sno: 101, cno: '3-105', degree: 64},
+            {sno: 108, cno: '3-105', degree: 78},
+            {sno: 107, cno: '6-106', degree: 79},
         ];
 
         const actual = scores.filter(score => score.degree > 60 && score.degree < 80);
@@ -52,9 +52,9 @@ describe('collection operation', function() {
 
     test('查询Score中成绩为85，86或88的记录', () => {
         const expected = [
-            { sno: 103, cno: '3-245', degree: 86 },
-            { sno: 105, cno: '3-105', degree: 88 },
-            { sno: 101, cno: '6-166', degree: 85 }
+            {sno: 103, cno: '3-245', degree: 86},
+            {sno: 105, cno: '3-105', degree: 88},
+            {sno: 101, cno: '6-166', degree: 85}
         ];
 
         const actual = scores.filter(score => score.degree === 85 || score.degree === 86 || score.degree === 88);
@@ -63,10 +63,10 @@ describe('collection operation', function() {
 
     test('查询Student中“95031”班或性别为“女”的同学记录', () => {
         const expected = [
-            { sno: 105, sname: '匡明', ssex: '男', sbirthday: '1975-10-02', class: 95031 },
-            { sno: 107, sname: '王丽', ssex: '女', sbirthday: '1976-01-23', class: 95033 },
-            { sno: 109, sname: '王芳', ssex: '女', sbirthday: '1975-02-10', class: 95031 },
-            { sno: 103, sname: '陆君', ssex: '男', sbirthday: '1974-06-03', class: 95031 },
+            {sno: 105, sname: '匡明', ssex: '男', sbirthday: '1975-10-02', class: 95031},
+            {sno: 107, sname: '王丽', ssex: '女', sbirthday: '1976-01-23', class: 95033},
+            {sno: 109, sname: '王芳', ssex: '女', sbirthday: '1975-02-10', class: 95031},
+            {sno: 103, sname: '陆君', ssex: '男', sbirthday: '1974-06-03', class: 95031},
 
         ];
 
@@ -76,15 +76,15 @@ describe('collection operation', function() {
 
     test('以Class降序查询Student的所有记录', () => {
         const expected = [
-            { sno: 108, sname: '曾华', ssex: '男', sbirthday: '1999-09-01', class: 95033 },
-            { sno: 107, sname: '王丽', ssex: '女', sbirthday: '1976-01-23', class: 95033 },
-            { sno: 101, sname: '李军', ssex: '男', sbirthday: '1976-02-20', class: 95033 },
-            { sno: 105, sname: '匡明', ssex: '男', sbirthday: '1975-10-02', class: 95031 },
-            { sno: 109, sname: '王芳', ssex: '女', sbirthday: '1975-02-10', class: 95031 },
-            { sno: 103, sname: '陆君', ssex: '男', sbirthday: '1974-06-03', class: 95031 }
+            {sno: 108, sname: '曾华', ssex: '男', sbirthday: '1999-09-01', class: 95033},
+            {sno: 107, sname: '王丽', ssex: '女', sbirthday: '1976-01-23', class: 95033},
+            {sno: 101, sname: '李军', ssex: '男', sbirthday: '1976-02-20', class: 95033},
+            {sno: 105, sname: '匡明', ssex: '男', sbirthday: '1975-10-02', class: 95031},
+            {sno: 109, sname: '王芳', ssex: '女', sbirthday: '1975-02-10', class: 95031},
+            {sno: 103, sname: '陆君', ssex: '男', sbirthday: '1974-06-03', class: 95031}
         ];
 
-        const actual = students.sort((a, b) => a.class <  b.class);
+        const actual = students.sort((a, b) => a.class < b.class);
         expect(actual).to.deep.equalInAnyOrder(expected);
     });
 
@@ -113,16 +113,16 @@ describe('collection operation', function() {
     });
 
     test('查询Score中的最高分的学生学号和课程号', () => {
-        const expected = [{ sno: 103, cno: '3-105' }];
+        const expected = [{sno: 103, cno: '3-105'}];
 
         const degrees = scores.map(score => score.degree);
         let maxDegree = Utils.max(degrees);
 
         const actual = scores.filter(score => score.degree === maxDegree)
-            .map(score => ({
-                sno: score.sno,
-                cno: score.cno
-            }));
+                             .map(score => ({
+                                 sno: score.sno,
+                                 cno: score.cno
+                             }));
         expect(actual).to.deep.equalInAnyOrder(expected);
     });
 
@@ -135,7 +135,7 @@ describe('collection operation', function() {
     });
 
     test('查询Score中至少有5名学生选修的并以3开头的课程的平均分数', () => {
-        const expected = [{ cno: '3-105', average: 81.5 }];
+        const expected = [{cno: '3-105', average: 81.5}];
 
         const groupByCno = scores.reduce((accum, cur) => {
             accum[cur.cno] ? accum[cur.cno]++ : accum[cur.cno] = 1;
@@ -182,27 +182,27 @@ describe('collection operation', function() {
 
     test('查询所有学生的Sname、Cno和Degree列', () => {
         const expected = [
-            { sname: '曾华', cno: '3-105', degree: 78 },
-            { sname: '曾华', cno: '6-166', degree: 81 },
-            { sname: '匡明', cno: '3-245', degree: 75 },
-            { sname: '匡明', cno: '3-105', degree: 88 },
-            { sname: '王丽', cno: '3-105', degree: 91 },
-            { sname: '王丽', cno: '6-106', degree: 79 },
-            { sname: '李军', cno: '3-105', degree: 64 },
-            { sname: '李军', cno: '6-166', degree: 85 },
-            { sname: '王芳', cno: '3-245', degree: 68 },
-            { sname: '王芳', cno: '3-105', degree: 76 },
-            { sname: '陆君', cno: '3-245', degree: 86 },
-            { sname: '陆君', cno: '3-105', degree: 92 }
+            {sname: '曾华', cno: '3-105', degree: 78},
+            {sname: '曾华', cno: '6-166', degree: 81},
+            {sname: '匡明', cno: '3-245', degree: 75},
+            {sname: '匡明', cno: '3-105', degree: 88},
+            {sname: '王丽', cno: '3-105', degree: 91},
+            {sname: '王丽', cno: '6-106', degree: 79},
+            {sname: '李军', cno: '3-105', degree: 64},
+            {sname: '李军', cno: '6-166', degree: 85},
+            {sname: '王芳', cno: '3-245', degree: 68},
+            {sname: '王芳', cno: '3-105', degree: 76},
+            {sname: '陆君', cno: '3-245', degree: 86},
+            {sname: '陆君', cno: '3-105', degree: 92}
         ];
 
         const actual = students.map(student => {
             return scores.filter(scoreRecord => scoreRecord.sno === student.sno)
-                .map(score => ({
-                    sname: student.sname,
-                    cno: score.cno,
-                    degree: score.degree
-                }));
+                         .map(score => ({
+                             sname: student.sname,
+                             cno: score.cno,
+                             degree: score.degree
+                         }));
         }).reduce((acc, cur) => acc.concat(cur), []);
 
         expect(actual).to.deep.equalInAnyOrder(expected);
@@ -210,27 +210,27 @@ describe('collection operation', function() {
 
     test('查询所有学生的Sno、Cname和Degree列', () => {
         const expected = [
-            { sno: 108, cname: '计算机导论', degree: 78 },
-            { sno: 108, cname: '数据电路', degree: 81 },
-            { sno: 105, cname: '操作系统', degree: 75 },
-            { sno: 105, cname: '计算机导论', degree: 88 },
-            { sno: 107, cname: '计算机导论', degree: 91 },
-            { sno: 107, cname: undefined, degree: 79 },
-            { sno: 101, cname: '计算机导论', degree: 64 },
-            { sno: 101, cname: '数据电路', degree: 85 },
-            { sno: 109, cname: '操作系统', degree: 68 },
-            { sno: 109, cname: '计算机导论', degree: 76 },
-            { sno: 103, cname: '操作系统', degree: 86 },
-            { sno: 103, cname: '计算机导论', degree: 92 },
+            {sno: 108, cname: '计算机导论', degree: 78},
+            {sno: 108, cname: '数据电路', degree: 81},
+            {sno: 105, cname: '操作系统', degree: 75},
+            {sno: 105, cname: '计算机导论', degree: 88},
+            {sno: 107, cname: '计算机导论', degree: 91},
+            {sno: 107, cname: undefined, degree: 79},
+            {sno: 101, cname: '计算机导论', degree: 64},
+            {sno: 101, cname: '数据电路', degree: 85},
+            {sno: 109, cname: '操作系统', degree: 68},
+            {sno: 109, cname: '计算机导论', degree: 76},
+            {sno: 103, cname: '操作系统', degree: 86},
+            {sno: 103, cname: '计算机导论', degree: 92},
         ];
 
         const actual = students.map(student => {
             return scores.filter(scoreRecord => scoreRecord.sno === student.sno)
-                .map(score => ({
-                    sno: score.sno,
-                    cname: (courses.find(cours => cours.cno === score.cno) || {}).cname,
-                    degree: score.degree
-                }));
+                         .map(score => ({
+                             sno: score.sno,
+                             cname: (courses.find(cours => cours.cno === score.cno) || {}).cname,
+                             degree: score.degree
+                         }));
         }).reduce((acc, cur) => acc.concat(cur), []);
 
         expect(actual).to.deep.equalInAnyOrder(expected);
@@ -238,27 +238,27 @@ describe('collection operation', function() {
 
     test('查询所有学生的Sname、Cname和Degree列', () => {
         const expected = [
-            { sname: '曾华', cname: '计算机导论', degree: 78 },
-            { sname: '曾华', cname: '数据电路', degree: 81 },
-            { sname: '匡明', cname: '操作系统', degree: 75 },
-            { sname: '匡明', cname: '计算机导论', degree: 88 },
-            { sname: '王丽', cname: '计算机导论', degree: 91 },
-            { sname: '王丽', cname: undefined, degree: 79 },
-            { sname: '李军', cname: '计算机导论', degree: 64 },
-            { sname: '李军', cname: '数据电路', degree: 85 },
-            { sname: '王芳', cname: '操作系统', degree: 68 },
-            { sname: '王芳', cname: '计算机导论', degree: 76 },
-            { sname: '陆君', cname: '操作系统', degree: 86 },
-            { sname: '陆君', cname: '计算机导论', degree: 92 }
+            {sname: '曾华', cname: '计算机导论', degree: 78},
+            {sname: '曾华', cname: '数据电路', degree: 81},
+            {sname: '匡明', cname: '操作系统', degree: 75},
+            {sname: '匡明', cname: '计算机导论', degree: 88},
+            {sname: '王丽', cname: '计算机导论', degree: 91},
+            {sname: '王丽', cname: undefined, degree: 79},
+            {sname: '李军', cname: '计算机导论', degree: 64},
+            {sname: '李军', cname: '数据电路', degree: 85},
+            {sname: '王芳', cname: '操作系统', degree: 68},
+            {sname: '王芳', cname: '计算机导论', degree: 76},
+            {sname: '陆君', cname: '操作系统', degree: 86},
+            {sname: '陆君', cname: '计算机导论', degree: 92}
         ];
 
         const actual = students.map(student => {
             return scores.filter(scoreRecord => scoreRecord.sno === student.sno)
-                .map(score => ({
-                    sname: student.sname,
-                    cname: (courses.find(cours => cours.cno === score.cno) || {}).cname,
-                    degree: score.degree
-                }));
+                         .map(score => ({
+                             sname: student.sname,
+                             cname: (courses.find(cours => cours.cno === score.cno) || {}).cname,
+                             degree: score.degree
+                         }));
         }).reduce((acc, cur) => acc.concat(cur), []);
         expect(actual).to.deep.equalInAnyOrder(expected);
     });
@@ -281,10 +281,10 @@ describe('collection operation', function() {
 
     test('查询选修“3-105”课程的成绩高于“109”号同学成绩的所有同学的记录', () => {
         const expected = [
-            { sno: 103, cno: '3-105', degree: 92 },
-            { sno: 105, cno: '3-105', degree: 88 },
-            { sno: 107, cno: '3-105', degree: 91 },
-            { sno: 108, cno: '3-105', degree: 78 }
+            {sno: 103, cno: '3-105', degree: 92},
+            {sno: 105, cno: '3-105', degree: 88},
+            {sno: 107, cno: '3-105', degree: 91},
+            {sno: 108, cno: '3-105', degree: 78}
         ];
 
         let specifyClass = scores.filter(score => score.cno === '3-105');
@@ -295,17 +295,17 @@ describe('collection operation', function() {
 
     test('查询score中选学一门以上课程的同学中分数为非最高分成绩的记录', () => {
         const expected = [
-            { sno: 101, cno: '3-105', degree: 64 },
-            { sno: 101, cno: '6-166', degree: 85 },
-            { sno: 103, cno: '3-245', degree: 86 },
-            { sno: 105, cno: '3-245', degree: 75 },
-            { sno: 105, cno: '3-105', degree: 88 },
-            { sno: 107, cno: '3-105', degree: 91 },
-            { sno: 107, cno: '6-106', degree: 79 },
-            { sno: 108, cno: '3-105', degree: 78 },
-            { sno: 108, cno: '6-166', degree: 81 },
-            { sno: 109, cno: '3-245', degree: 68 },
-            { sno: 109, cno: '3-105', degree: 76 }
+            {sno: 101, cno: '3-105', degree: 64},
+            {sno: 101, cno: '6-166', degree: 85},
+            {sno: 103, cno: '3-245', degree: 86},
+            {sno: 105, cno: '3-245', degree: 75},
+            {sno: 105, cno: '3-105', degree: 88},
+            {sno: 107, cno: '3-105', degree: 91},
+            {sno: 107, cno: '6-106', degree: 79},
+            {sno: 108, cno: '3-105', degree: 78},
+            {sno: 108, cno: '6-166', degree: 81},
+            {sno: 109, cno: '3-245', degree: 68},
+            {sno: 109, cno: '3-105', degree: 76}
         ];
 
         let studentMap = Utils.caculateRepeateNum(scores, 'sno');
@@ -325,14 +325,14 @@ describe('collection operation', function() {
 
     test('查询成绩高于学号为“109”、课程号为“3-105”的成绩的所有记录', () => {
         const expected = [
-            { sno: 103, cno: '3-245', degree: 86 },
-            { sno: 103, cno: '3-105', degree: 92 },
-            { sno: 105, cno: '3-105', degree: 88 },
-            { sno: 107, cno: '3-105', degree: 91 },
-            { sno: 108, cno: '3-105', degree: 78 },
-            { sno: 101, cno: '6-166', degree: 85 },
-            { sno: 107, cno: '6-106', degree: 79 },
-            { sno: 108, cno: '6-166', degree: 81 }
+            {sno: 103, cno: '3-245', degree: 86},
+            {sno: 103, cno: '3-105', degree: 92},
+            {sno: 105, cno: '3-105', degree: 88},
+            {sno: 107, cno: '3-105', degree: 91},
+            {sno: 108, cno: '3-105', degree: 78},
+            {sno: 101, cno: '6-166', degree: 85},
+            {sno: 107, cno: '6-106', degree: 79},
+            {sno: 108, cno: '6-166', degree: 81}
         ];
 
         let specifyRecord = scores.find(score => score.sno === 109 && score.cno === '3-105');
@@ -341,7 +341,16 @@ describe('collection operation', function() {
     });
 
     test('查询和学号为108的同学同年出生的所有学生的Sno、Sname和Sbirthday列', () => {
-        fail('unimplement');
+        const expected = [{sno: 108, sname: '曾华', sbirthday: '1999-09-01'}];
+
+        const studentOf108 = students.find(student => student.sno === 108);
+        const actual = students.filter(student => student.sbirthday === studentOf108.sbirthday)
+                               .map(student => ({
+                                   sno: student.sno,
+                                   sname: student.sname,
+                                   sbirthday: student.sbirthday
+                               }));
+        expect(actual).to.deep.equalInAnyOrder(expected);
     });
 
     test('查询“张旭“教师任课的学生成绩', () => {
