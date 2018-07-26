@@ -33,6 +33,12 @@
     "array-bracket-spacing": "error",
     "block-spacing": "error",
     "object-curly-spacing": "error",
-    "array-bracket-newline": "error"
+    "array-bracket-newline": "error",
+    "newline-per-chained-call": [
+      "error",
+      {
+        "ignoreChainWithDepth": 2
+      }
+    ]
   }
 }

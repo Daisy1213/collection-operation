@@ -5,7 +5,7 @@ chai.use(deepEqualInAnyOrder);
 
 const {expect} = chai;
 
-const {teachers, courses, scores, students} = require('../data');
+const {teachers, courses, scores, students} = require('../const/data');
 const Utils = require('../utils');
 
 describe('collection operation', function () {
@@ -196,14 +196,13 @@ describe('collection operation', function () {
             {sname: '陆君', cno: '3-105', degree: 92}
         ];
 
-        const actual = students.map(student => {
-            return scores.filter(scoreRecord => scoreRecord.sno === student.sno)
+        const actual = students.map(student =>
+            scores.filter(scoreRecord => scoreRecord.sno === student.sno)
                 .map(score => ({
                     sname: student.sname,
                     cno: score.cno,
                     degree: score.degree
-                }));
-        }).reduce((acc, cur) => acc.concat(cur), []);
+                }))).reduce((acc, cur) => acc.concat(cur), []);
 
         expect(actual).to.deep.equalInAnyOrder(expected);
     });
@@ -224,14 +223,13 @@ describe('collection operation', function () {
             {sno: 103, cname: '计算机导论', degree: 92},
         ];
 
-        const actual = students.map(student => {
-            return scores.filter(scoreRecord => scoreRecord.sno === student.sno)
+        const actual = students.map(student =>
+            scores.filter(scoreRecord => scoreRecord.sno === student.sno)
                 .map(score => ({
                     sno: score.sno,
                     cname: (courses.find(cours => cours.cno === score.cno) || {}).cname,
                     degree: score.degree
-                }));
-        }).reduce((acc, cur) => acc.concat(cur), []);
+                }))).reduce((acc, cur) => acc.concat(cur), []);
 
         expect(actual).to.deep.equalInAnyOrder(expected);
     });
@@ -252,14 +250,13 @@ describe('collection operation', function () {
             {sname: '陆君', cname: '计算机导论', degree: 92}
         ];
 
-        const actual = students.map(student => {
-            return scores.filter(scoreRecord => scoreRecord.sno === student.sno)
+        const actual = students.map(student =>
+            scores.filter(scoreRecord => scoreRecord.sno === student.sno)
                 .map(score => ({
                     sname: student.sname,
                     cname: (courses.find(cours => cours.cno === score.cno) || {}).cname,
                     degree: score.degree
-                }));
-        }).reduce((acc, cur) => acc.concat(cur), []);
+                }))).reduce((acc, cur) => acc.concat(cur), []);
         expect(actual).to.deep.equalInAnyOrder(expected);
     });
 
@@ -267,9 +264,9 @@ describe('collection operation', function () {
         const expected = 80;
 
         const studentsOf95033 = students.filter(student => student.class === 95033);
-        const scoresOf95033 = studentsOf95033.map(student => {
-            return scores.filter(score => score.sno === student.sno);
-        }).reduce((acc, cur) => acc.concat(cur), []);
+        const scoresOf95033 = studentsOf95033.map(student =>
+            scores.filter(score => score.sno === student.sno))
+            .reduce((acc, cur) => acc.concat(cur), []);
 
         const actual = Math.round(Utils.average(scoresOf95033, 'degree'));
         expect(actual).to.deep.equalInAnyOrder(expected);
@@ -344,7 +341,8 @@ describe('collection operation', function () {
         const expected = [{sno: 108, sname: '曾华', sbirthday: '1999-09-01'}];
 
         const studentOf108 = students.find(student => student.sno === 108);
-        const actual = students.filter(student => student.sbirthday === studentOf108.sbirthday)
+        const actual = students
+            .filter(student => student.sbirthday === studentOf108.sbirthday)
             .map(student => ({
                 sno: student.sno,
                 sname: student.sname,
