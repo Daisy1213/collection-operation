@@ -102,7 +102,7 @@ describe('collection operation', function () {
 
         // const sort1 = arr.sort((s1, s2) => s1.x - s2.x);
         // const sort2 = sort1.sort((s1, s2) => s2.y - s1.y);
-        // fail('unimplement');
+        // throw new Error();
     });
 
     test('查询“95031”班的学生人数', () => {
@@ -276,7 +276,7 @@ describe('collection operation', function () {
     });
 
     test('现查询所有同学的Sno、Cno和rank列', () => {
-        fail('unimplement');
+        throw new Error();
     });
 
     test('查询选修“3-105”课程的成绩高于“109”号同学成绩的所有同学的记录', () => {
@@ -365,91 +365,91 @@ describe('collection operation', function () {
     });
 
     test('查询选修某课程的同学人数多于5人的教师姓名', () => {
-        fail('unimplement');
+        throw new Error();
     });
 
     test('查询95033班和95031班全体学生的记录', () => {
-        fail('unimplement');
+        throw new Error();
     });
 
     test('查询存在有85分以上成绩的课程Cno.', () => {
-        fail('unimplement');
+        throw new Error();
     });
 
     test('查询出“计算机系“教师所教课程的成绩', () => {
-        fail('unimplement');
+        throw new Error();
     });
 
     test('查询“计算机系”与“电子工程系“不同职称的教师的Tname和Prof', () => {
-        fail('unimplement');
+        throw new Error();
     });
 
     test('查询选修编号为“3-105“课程且成绩至少高于选修编号为“3-245”的同学的Cno、Sno和Degree,并按Degree从高到低次序排序', () => {
-        fail('unimplement');
+        throw new Error();
     });
 
     test('查询选修编号为“3-105”且成绩高于选修编号为“3-245”课程的同学的Cno、Sno和Degree.', () => {
-        fail('unimplement');
+        throw new Error();
     });
 
     test('查询所有教师和同学的name、sex和birthday.', () => {
-        fail('unimplement');
+        throw new Error();
     });
 
     test('查询所有“女”教师和“女”同学的name、sex和birthday.', () => {
-        fail('unimplement');
+        throw new Error();
     });
 
     test('查询成绩比该课程平均成绩低的同学的成绩', () => {
-        fail('unimplement');
+        throw new Error();
     });
 
     test('查询所有任课教师的Tname和Depart.', () => {
-        fail('unimplement');
+        throw new Error();
     });
 
     test('查询所有未讲课的教师的Tname和Depart.', () => {
-        fail('unimplement');
+        throw new Error();
     });
 
     test('查询至少有2名男生的班号', () => {
-        fail('unimplement');
+        throw new Error();
     });
 
     test('查询Student中不姓“王”的同学记录', () => {
-        fail('unimplement');
+        throw new Error();
     });
 
     test('查询Student中每个学生的姓名和年龄', () => {
-        fail('unimplement');
+        throw new Error();
     });
 
     test('查询Student中最大和最小的Sbirthday日期值', () => {
-        fail('unimplement');
+        throw new Error();
     });
 
     test('以班号和年龄从大到小的顺序查询Student中的全部记录', () => {
-        fail('unimplement');
+        throw new Error();
     });
 
     test('查询“男”教师及其所上的课程', () => {
-        fail('unimplement');
+        throw new Error();
     });
 
     test('查询最高分同学的Sno、Cno和Degree列', () => {
-        fail('unimplement');
+        throw new Error();
     });
 
     test('查询和“李军”同性别的所有同学的Sname.', () => {
-        fail('unimplement');
+        throw new Error();
     });
 
     test('查询和“李军”同性别并同班的同学Sname.', () => {
-        fail('unimplement');
+        throw new Error();
     });
 
     test('查询所有选修“计算机导论”课程的“男”同学的成绩', () => {
-        fail('unimplement');
+        throw new Error();
     });
 
 });
