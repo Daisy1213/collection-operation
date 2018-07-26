@@ -6,7 +6,7 @@ chai.use(deepEqualInAnyOrder);
 const {expect} = chai;
 
 const {teachers, courses, scores, students} = require('../const/data');
-const Utils = require('../utils');
+const Utils = require('../const/utils');
 
 describe('collection operation', function () {
 
@@ -137,14 +137,14 @@ describe('collection operation', function () {
     test('查询Score中至少有5名学生选修的并以3开头的课程的平均分数', () => {
         const expected = [{cno: '3-105', average: 81.5}];
 
-        const groupByCno = scores.reduce((accum, cur) => {
+        const countByCno = scores.reduce((accum, cur) => {
             accum[cur.cno] ? accum[cur.cno]++ : accum[cur.cno] = 1;
             return accum;
         }, {});
 
         let specifyCnos = [];
-        for (let key in groupByCno) {
-            if (groupByCno[key] >= 5 && key.startsWith('3')) {
+        for (let key in countByCno) {
+            if (countByCno[key] >= 5 && key.startsWith('3')) {
                 specifyCnos.push(key);
             }
         }
