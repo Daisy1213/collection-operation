@@ -23,7 +23,7 @@ function average(dataArr, param){
 }
 
 //对数组元素根据指定条件进行计数
-function caculateRepeateNum(numberArr, param){
+function countByParam(numberArr, param){
     return numberArr.reduce((accum, cur) => {
         accum[cur[param]] ? accum[cur[param]]++ : accum[cur[param]] = 1;
         return accum;
@@ -35,5 +35,5 @@ module.exports = {
     min,
     sum,
     average,
-    caculateRepeateNum
+    countByParam
 };

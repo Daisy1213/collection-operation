@@ -119,10 +119,10 @@ describe('collection operation', function () {
         let maxDegree = Utils.max(degrees);
 
         const actual = scores.filter(score => score.degree === maxDegree)
-            .map(score => ({
-                sno: score.sno,
-                cno: score.cno
-            }));
+                             .map(score => ({
+                                 sno: score.sno,
+                                 cno: score.cno
+                             }));
         expect(actual).to.deep.equalInAnyOrder(expected);
     });
 
@@ -137,10 +137,7 @@ describe('collection operation', function () {
     test('查询Score中至少有5名学生选修的并以3开头的课程的平均分数', () => {
         const expected = [{cno: '3-105', average: 81.5}];
 
-        const countByCno = scores.reduce((accum, cur) => {
-            accum[cur.cno] ? accum[cur.cno]++ : accum[cur.cno] = 1;
-            return accum;
-        }, {});
+        const countByCno = Utils.countByParam(scores, 'cno');
 
         let specifyCnos = [];
         for (let key in countByCno) {
@@ -198,11 +195,11 @@ describe('collection operation', function () {
 
         const actual = students.map(student =>
             scores.filter(scoreRecord => scoreRecord.sno === student.sno)
-                .map(score => ({
-                    sname: student.sname,
-                    cno: score.cno,
-                    degree: score.degree
-                }))).reduce((acc, cur) => acc.concat(cur), []);
+                  .map(score => ({
+                      sname: student.sname,
+                      cno: score.cno,
+                      degree: score.degree
+                  }))).reduce((acc, cur) => acc.concat(cur), []);
 
         expect(actual).to.deep.equalInAnyOrder(expected);
     });
@@ -225,11 +222,11 @@ describe('collection operation', function () {
 
         const actual = students.map(student =>
             scores.filter(scoreRecord => scoreRecord.sno === student.sno)
-                .map(score => ({
-                    sno: score.sno,
-                    cname: (courses.find(cours => cours.cno === score.cno) || {}).cname,
-                    degree: score.degree
-                }))).reduce((acc, cur) => acc.concat(cur), []);
+                  .map(score => ({
+                      sno: score.sno,
+                      cname: (courses.find(cours => cours.cno === score.cno) || {}).cname,
+                      degree: score.degree
+                  }))).reduce((acc, cur) => acc.concat(cur), []);
 
         expect(actual).to.deep.equalInAnyOrder(expected);
     });
@@ -252,11 +249,11 @@ describe('collection operation', function () {
 
         const actual = students.map(student =>
             scores.filter(scoreRecord => scoreRecord.sno === student.sno)
-                .map(score => ({
-                    sname: student.sname,
-                    cname: (courses.find(cours => cours.cno === score.cno) || {}).cname,
-                    degree: score.degree
-                }))).reduce((acc, cur) => acc.concat(cur), []);
+                  .map(score => ({
+                      sname: student.sname,
+                      cname: (courses.find(cours => cours.cno === score.cno) || {}).cname,
+                      degree: score.degree
+                  }))).reduce((acc, cur) => acc.concat(cur), []);
         expect(actual).to.deep.equalInAnyOrder(expected);
     });
 
@@ -266,7 +263,7 @@ describe('collection operation', function () {
         const studentsOf95033 = students.filter(student => student.class === 95033);
         const scoresOf95033 = studentsOf95033.map(student =>
             scores.filter(score => score.sno === student.sno))
-            .reduce((acc, cur) => acc.concat(cur), []);
+                                             .reduce((acc, cur) => acc.concat(cur), []);
 
         const actual = Math.round(Utils.average(scoresOf95033, 'degree'));
         expect(actual).to.deep.equalInAnyOrder(expected);
@@ -305,7 +302,7 @@ describe('collection operation', function () {
             {sno: 109, cno: '3-105', degree: 76}
         ];
 
-        let studentMap = Utils.caculateRepeateNum(scores, 'sno');
+        let studentMap = Utils.countByParam(scores, 'sno');
         let allRecords = [];
         for (let student in studentMap) {
             if (studentMap[student] > 1) {
@@ -363,15 +360,43 @@ describe('collection operation', function () {
     });
 
     test('查询选修某课程的同学人数多于5人的教师姓名', () => {
-        throw new Error();
+        const expected = ['王萍'];
+
+        const countByCno = Utils.countByParam(scores, 'cno');
+        let moreThanFiveCnos = [];
+        for (let cno  in countByCno) {
+            if (countByCno[cno] > 5) {
+                moreThanFiveCnos = moreThanFiveCnos.concat(cno);
+            }
+        }
+        const actual = moreThanFiveCnos.map(cno => courses.find(cours => cours.cno === cno))
+                                       .map(cours => teachers.find(teacher => teacher.tno === cours.tno).tname);
+        expect(actual).to.deep.equalInAnyOrder(expected);
     });
 
     test('查询95033班和95031班全体学生的记录', () => {
-        throw new Error();
+        const expected = [
+            {sno: 108, sname: '曾华', ssex: '男', sbirthday: '1999-09-01', class: 95033},
+            {sno: 105, sname: '匡明', ssex: '男', sbirthday: '1975-10-02', class: 95031},
+            {sno: 107, sname: '王丽', ssex: '女', sbirthday: '1976-01-23', class: 95033},
+            {sno: 101, sname: '李军', ssex: '男', sbirthday: '1976-02-20', class: 95033},
+            {sno: 109, sname: '王芳', ssex: '女', sbirthday: '1975-02-10', class: 95031},
+            {sno: 103, sname: '陆君', ssex: '男', sbirthday: '1974-06-03', class: 95031}
+        ];
+
+        const actual = students.filter(student => student.class === 95033 || student.class === 95031);
+        expect(actual).to.deep.equalInAnyOrder(expected);
     });
 
     test('查询存在有85分以上成绩的课程Cno.', () => {
-        throw new Error();
+        const expected = ['3-245', '3-105'];
+        const actual = scores.filter(score => score.degree > 85)
+                             .reduce((acc, cur) => {
+                                 if (!acc.includes(cur.cno))
+                                     acc = acc.concat(cur.cno);
+                                 return acc;
+                             }, []);
+        expect(actual).to.deep.equalInAnyOrder(expected);
     });
 
     test('查询出“计算机系“教师所教课程的成绩', () => {
