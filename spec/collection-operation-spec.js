@@ -400,7 +400,22 @@ describe('collection operation', function () {
     });
 
     test('查询出“计算机系“教师所教课程的成绩', () => {
-        throw new Error();
+        const expected = [
+            {sno: 103, cno: '3-245', degree: 86},
+            {sno: 105, cno: '3-245', degree: 75},
+            {sno: 109, cno: '3-245', degree: 68},
+            {sno: 103, cno: '3-105', degree: 92},
+            {sno: 105, cno: '3-105', degree: 88},
+            {sno: 109, cno: '3-105', degree: 76},
+            {sno: 101, cno: '3-105', degree: 64},
+            {sno: 107, cno: '3-105', degree: 91},
+            {sno: 108, cno: '3-105', degree: 78}
+        ];
+        const actual = teachers.filter(techer => techer.depart === '计算机系')
+                               .map(teacher => courses.find(cours => cours.tno === teacher.tno))
+                               .map(cours => scores.filter(score => score.cno === cours.cno))
+                               .reduce((acc, cur) => acc.concat(cur), []);
+        expect(actual).to.deep.equalInAnyOrder(expected);
     });
 
     test('查询“计算机系”与“电子工程系“不同职称的教师的Tname和Prof', () => {
