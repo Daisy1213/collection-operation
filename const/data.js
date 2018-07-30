@@ -15,10 +15,10 @@ const courses = [
 ];
 
 const scores = [
-    {sno: 103, cno: '3-245', degree: 86}, 
+    {sno: 103, cno: '3-245', degree: 86}, //76.33
     {sno: 105, cno: '3-245', degree: 75},
     {sno: 109, cno: '3-245', degree: 68},
-    {sno: 103, cno: '3-105', degree: 92},
+    {sno: 103, cno: '3-105', degree: 92}, //81.5
     {sno: 105, cno: '3-105', degree: 88},
     {sno: 109, cno: '3-105', degree: 76},
     {sno: 101, cno: '3-105', degree: 64},
@@ -26,7 +26,7 @@ const scores = [
     {sno: 108, cno: '3-105', degree: 78},
     {sno: 101, cno: '6-166', degree: 85},
     {sno: 107, cno: '6-106', degree: 79},
-    {sno: 108, cno: '6-166', degree: 81}
+    {sno: 108, cno: '6-166', degree: 81} //81.666
 ];
 
 const teachers = [
