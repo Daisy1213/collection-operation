@@ -418,8 +418,20 @@ describe('collection operation', function () {
         expect(actual).to.deep.equalInAnyOrder(expected);
     });
 
-    test('查询“计算机系”与“电子工程系“不同职称的教师的Tname和Prof', () => {
-        throw new Error();
+    test('查询“计算机系”与“电子工程系“教师的Tname和Prof', () => {
+        const expected = [
+            {tname: '李诚', prof: '副教授'},
+            {tname: '张旭', prof: '讲师'},
+            {tname: '王萍', prof: '助教'},
+            {tname: '刘冰', prof: '助教'}
+        ];
+
+        const actual = teachers.filter(teacher => teacher.depart === '计算机系' || teacher.depart === '电子工程系')
+                               .map(teacher => ({
+                                   tname: teacher.tname,
+                                   prof: teacher.prof
+                               }));
+        expect(actual).to.deep.equalInAnyOrder(expected);
     });
 
     test('查询选修编号为“3-105“课程且成绩至少高于选修编号为“3-245”的同学的Cno、Sno和Degree,并按Degree从高到低次序排序', () => {
