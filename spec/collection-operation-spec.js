@@ -525,7 +525,7 @@ describe('collection operation', function () {
 
         const actual = scores.reduce((acc, cur) => {
             if (!acc.includes(cur.cno)) {
-                acc.push(cur.cno)
+                acc.push(cur.cno);
             }
             return acc;
         }, []).map(cno => ({
@@ -539,7 +539,19 @@ describe('collection operation', function () {
     });
 
     test('查询所有任课教师的Tname和Depart.', () => {
-        throw new Error();
+        const expected = [
+            {tname: '李诚', depart: '计算机系'},
+            {tname: '张旭', depart: '电子工程系'},
+            {tname: '王萍', depart: '计算机系'},
+            {tname: '刘冰', depart: '电子工程系'}
+        ];
+
+        const actual = teachers.map(teacher => ({
+            tname: teacher.tname,
+            depart: teacher.depart
+        }));
+
+        expect(actual).to.deep.equalInAnyOrder(expected);
     });
 
     test('查询所有未讲课的教师的Tname和Depart.', () => {
