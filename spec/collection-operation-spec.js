@@ -613,7 +613,15 @@ describe('collection operation', function () {
     });
 
     test('查询Student中不姓“王”的同学记录', () => {
-        throw new Error();
+        const expected = [
+            {sno: 108, sname: '曾华', ssex: '男', sbirthday: '1999-09-01', class: 95033},
+            {sno: 105, sname: '匡明', ssex: '男', sbirthday: '1975-10-02', class: 95031},
+            {sno: 101, sname: '李军', ssex: '男', sbirthday: '1976-02-20', class: 95033},
+            {sno: 103, sname: '陆君', ssex: '男', sbirthday: '1974-06-03', class: 95031}
+        ];
+        const actual = students.filter(student => !student.sname.startsWith('王'));
+
+        expect(actual).to.deep.equalInAnyOrder(expected);
     });
 
     test('查询Student中每个学生的姓名和年龄', () => {
