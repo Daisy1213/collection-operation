@@ -101,7 +101,8 @@ describe('collection operation', function () {
             {sno: 109, cno: '3-105', degree: 76},
             {sno: 105, cno: '3-245', degree: 75},
             {sno: 109, cno: '3-245', degree: 68},
-            {sno: 101, cno: '3-105', degree: 64}];
+            {sno: 101, cno: '3-105', degree: 64}
+        ];
 
         const actual = scores.sort((a, b) => a.cno.localeCompare(b.cno))
                              .sort((a, b) => a.degree > b.degree);
@@ -568,7 +569,23 @@ describe('collection operation', function () {
     });
 
     test('查询所有未讲课的教师的Tname和Depart.', () => {
-        throw new Error();
+        const expected = [{
+            tname: '刘冰',
+            depart: '电子工程系'
+        }];
+
+        const actual = teachers.map(teacher => {
+            const teachingPerson = courses.find(cours => cours.tno === teacher.tno);
+            if (!teachingPerson) {
+                return {
+                    tname: teacher.tname,
+                    depart: teacher.depart
+                };
+            }
+            return [];
+        }).reduce((acc, cur) => acc.concat(cur), []);
+
+        expect(actual).to.deep.equalInAnyOrder(expected);
     });
 
     test('查询至少有2名男生的班号', () => {
