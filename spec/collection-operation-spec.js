@@ -672,7 +672,11 @@ describe('collection operation', function () {
     });
 
     test('查询最高分同学的Sno、Cno和Degree列', () => {
-        throw new Error();
+        const expected = [{sno: 103, cno: '3-105', degree: 92}
+        ];
+        
+        const actual = scores.filter(score => score.degree === Utils.max(scores.map(score => score.degree)));
+        expect(actual).to.deep.equalInAnyOrder(expected);
     });
 
     test('查询和“李军”同性别的所有同学的Sname.', () => {
