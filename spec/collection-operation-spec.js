@@ -273,10 +273,6 @@ describe('collection operation', function () {
         expect(actual).to.deep.equalInAnyOrder(expected);
     });
 
-    test('现查询所有同学的Sno、Cno和rank列', () => {
-        throw new Error();
-    });
-
     test('查询选修“3-105”课程的成绩高于“109”号同学成绩的所有同学的记录', () => {
         const expected = [
             {sno: 103, cno: '3-105', degree: 92},
