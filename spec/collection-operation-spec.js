@@ -569,10 +569,12 @@ describe('collection operation', function () {
     });
 
     test('查询所有未讲课的教师的Tname和Depart.', () => {
-        const expected = [{
-            tname: '刘冰',
-            depart: '电子工程系'
-        }];
+        const expected = [
+            {
+                tname: '刘冰',
+                depart: '电子工程系'
+            }
+        ];
 
         const actual = teachers.map(teacher => {
             const teachingPerson = courses.find(cours => cours.tno === teacher.tno);
@@ -589,7 +591,25 @@ describe('collection operation', function () {
     });
 
     test('查询至少有2名男生的班号', () => {
-        throw new Error();
+        const expected = ['95033', '95031'];
+
+        const studentsOfClass = students.reduce((acc, cur) => {
+            acc[cur.class] ? acc[cur.class].push(cur) : acc[cur.class] = [cur];
+            return acc;
+        }, {});
+        const maleCountOfClass = [];
+        for (let classNum in studentsOfClass) {
+            const maleStudentsCount = studentsOfClass[classNum].filter(student => student.ssex === '男').length;
+            maleCountOfClass.push({
+                class: classNum,
+                count: maleStudentsCount
+            });
+        }
+
+        const actual = maleCountOfClass.filter(classItem => classItem.count > 2 || classItem.count === 2)
+                                       .map(classItem => classItem.class);
+
+        expect(actual).to.deep.equalInAnyOrder(expected);
     });
 
     test('查询Student中不姓“王”的同学记录', () => {
