@@ -89,20 +89,24 @@ describe('collection operation', function () {
     });
 
     test('以Cno升序、Degree降序查询Score的所有记录', () => {
-        // const arr = [
-        //     { x: 4, y: 3 },
-        //     { x: 2, y: 1 },
-        //     { x: 1, y: 6 },
-        //     { x: 2, y: 3 },
-        //     { x: 3, y: 4 },
-        //     { x: 2, y: 5 },
-        //     { x: 3, y: 6 },
-        //     { x: 4, y: 6 }
-        // ];
+        const expected = [
+            {sno: 103, cno: '3-105', degree: 92},
+            {sno: 107, cno: '3-105', degree: 91},
+            {sno: 105, cno: '3-105', degree: 88},
+            {sno: 103, cno: '3-245', degree: 86},
+            {sno: 101, cno: '6-166', degree: 85},
+            {sno: 108, cno: '6-166', degree: 81},
+            {sno: 107, cno: '6-106', degree: 79},
+            {sno: 108, cno: '3-105', degree: 78},
+            {sno: 109, cno: '3-105', degree: 76},
+            {sno: 105, cno: '3-245', degree: 75},
+            {sno: 109, cno: '3-245', degree: 68},
+            {sno: 101, cno: '3-105', degree: 64}];
 
-        // const sort1 = arr.sort((s1, s2) => s1.x - s2.x);
-        // const sort2 = sort1.sort((s1, s2) => s2.y - s1.y);
-        // throw new Error();
+        const actual = scores.sort((a, b) => a.cno.localeCompare(b.cno))
+                             .sort((a, b) => a.degree > b.degree);
+
+        expect(actual).to.deep.equalInAnyOrder(expected);
     });
 
     test('查询“95031”班的学生人数', () => {
@@ -119,10 +123,10 @@ describe('collection operation', function () {
         let maxDegree = Utils.max(degrees);
 
         const actual = scores.filter(score => score.degree === maxDegree)
-            .map(score => ({
-                sno: score.sno,
-                cno: score.cno
-            }));
+                             .map(score => ({
+                                 sno: score.sno,
+                                 cno: score.cno
+                             }));
         expect(actual).to.deep.equalInAnyOrder(expected);
     });
 
@@ -195,11 +199,11 @@ describe('collection operation', function () {
 
         const actual = students.map(student =>
             scores.filter(scoreRecord => scoreRecord.sno === student.sno)
-                .map(score => ({
-                    sname: student.sname,
-                    cno: score.cno,
-                    degree: score.degree
-                }))).reduce((acc, cur) => acc.concat(cur), []);
+                  .map(score => ({
+                      sname: student.sname,
+                      cno: score.cno,
+                      degree: score.degree
+                  }))).reduce((acc, cur) => acc.concat(cur), []);
 
         expect(actual).to.deep.equalInAnyOrder(expected);
     });
@@ -222,11 +226,11 @@ describe('collection operation', function () {
 
         const actual = students.map(student =>
             scores.filter(scoreRecord => scoreRecord.sno === student.sno)
-                .map(score => ({
-                    sno: score.sno,
-                    cname: (courses.find(cours => cours.cno === score.cno) || {}).cname,
-                    degree: score.degree
-                }))).reduce((acc, cur) => acc.concat(cur), []);
+                  .map(score => ({
+                      sno: score.sno,
+                      cname: (courses.find(cours => cours.cno === score.cno) || {}).cname,
+                      degree: score.degree
+                  }))).reduce((acc, cur) => acc.concat(cur), []);
 
         expect(actual).to.deep.equalInAnyOrder(expected);
     });
@@ -249,11 +253,11 @@ describe('collection operation', function () {
 
         const actual = students.map(student =>
             scores.filter(scoreRecord => scoreRecord.sno === student.sno)
-                .map(score => ({
-                    sname: student.sname,
-                    cname: (courses.find(cours => cours.cno === score.cno) || {}).cname,
-                    degree: score.degree
-                }))).reduce((acc, cur) => acc.concat(cur), []);
+                  .map(score => ({
+                      sname: student.sname,
+                      cname: (courses.find(cours => cours.cno === score.cno) || {}).cname,
+                      degree: score.degree
+                  }))).reduce((acc, cur) => acc.concat(cur), []);
         expect(actual).to.deep.equalInAnyOrder(expected);
     });
 
@@ -263,7 +267,7 @@ describe('collection operation', function () {
         const studentsOf95033 = students.filter(student => student.class === 95033);
         const scoresOf95033 = studentsOf95033.map(student =>
             scores.filter(score => score.sno === student.sno))
-            .reduce((acc, cur) => acc.concat(cur), []);
+                                             .reduce((acc, cur) => acc.concat(cur), []);
 
         const actual = Math.round(Utils.average(scoresOf95033, 'degree'));
         expect(actual).to.deep.equalInAnyOrder(expected);
@@ -370,7 +374,7 @@ describe('collection operation', function () {
             }
         }
         const actual = moreThanFiveCnos.map(cno => courses.find(cours => cours.cno === cno))
-            .map(cours => teachers.find(teacher => teacher.tno === cours.tno).tname);
+                                       .map(cours => teachers.find(teacher => teacher.tno === cours.tno).tname);
         expect(actual).to.deep.equalInAnyOrder(expected);
     });
 
@@ -391,11 +395,11 @@ describe('collection operation', function () {
     test('查询存在有85分以上成绩的课程Cno.', () => {
         const expected = ['3-245', '3-105'];
         const actual = scores.filter(score => score.degree > 85)
-            .reduce((acc, cur) => {
-                if (!acc.includes(cur.cno))
-                    acc = acc.concat(cur.cno);
-                return acc;
-            }, []);
+                             .reduce((acc, cur) => {
+                                 if (!acc.includes(cur.cno))
+                                     acc = acc.concat(cur.cno);
+                                 return acc;
+                             }, []);
         expect(actual).to.deep.equalInAnyOrder(expected);
     });
 
@@ -412,9 +416,9 @@ describe('collection operation', function () {
             {sno: 108, cno: '3-105', degree: 78}
         ];
         const actual = teachers.filter(techer => techer.depart === '计算机系')
-            .map(teacher => courses.find(cours => cours.tno === teacher.tno))
-            .map(cours => scores.filter(score => score.cno === cours.cno))
-            .reduce((acc, cur) => acc.concat(cur), []);
+                               .map(teacher => courses.find(cours => cours.tno === teacher.tno))
+                               .map(cours => scores.filter(score => score.cno === cours.cno))
+                               .reduce((acc, cur) => acc.concat(cur), []);
         expect(actual).to.deep.equalInAnyOrder(expected);
     });
 
@@ -427,10 +431,10 @@ describe('collection operation', function () {
         ];
 
         const actual = teachers.filter(teacher => teacher.depart === '计算机系' || teacher.depart === '电子工程系')
-            .map(teacher => ({
-                tname: teacher.tname,
-                prof: teacher.prof
-            }));
+                               .map(teacher => ({
+                                   tname: teacher.tname,
+                                   prof: teacher.prof
+                               }));
         expect(actual).to.deep.equalInAnyOrder(expected);
     });
 
@@ -441,14 +445,14 @@ describe('collection operation', function () {
             {cno: '3-105', sno: 105, degree: 88},
         ];
         const maxDegreeOf3245 = Utils.max(scores.filter(score => score.cno === '3-245')
-            .map(score => score.degree));
+                                                .map(score => score.degree));
         const actual = scores.filter(score => score.cno === '3-105' && score.degree > maxDegreeOf3245)
-            .map(score => ({
-                cno: score.cno,
-                sno: score.sno,
-                degree: score.degree
-            }))
-            .sort((a, b) => a < b);
+                             .map(score => ({
+                                 cno: score.cno,
+                                 sno: score.sno,
+                                 degree: score.degree
+                             }))
+                             .sort((a, b) => a < b);
 
         expect(actual).to.deep.equalInAnyOrder(expected);
     });
@@ -509,18 +513,18 @@ describe('collection operation', function () {
         ];
 
         const studensOfFemale = students.filter(student => student.ssex === '女')
-            .map(student => ({
-                sname: student.sname,
-                ssex: student.ssex,
-                sbirthday: student.sbirthday
-            }));
+                                        .map(student => ({
+                                            sname: student.sname,
+                                            ssex: student.ssex,
+                                            sbirthday: student.sbirthday
+                                        }));
 
         const teachersOfFemale = teachers.filter(teacher => teacher.tsex === '女')
-            .map(teacher => ({
-                tname: teacher.tname,
-                tsex: teacher.tsex,
-                tbirthday: teacher.tbirthday
-            }));
+                                         .map(teacher => ({
+                                             tname: teacher.tname,
+                                             tsex: teacher.tsex,
+                                             tbirthday: teacher.tbirthday
+                                         }));
         const actual = studensOfFemale.concat(teachersOfFemale);
 
         expect(actual).to.deep.equalInAnyOrder(expected);
@@ -542,9 +546,9 @@ describe('collection operation', function () {
             }
             return acc;
         }, []).map(cno => ({
-            cno: cno,
-            average: Utils.average(scores.filter(score => score.cno === cno), 'degree')
-        })
+                cno: cno,
+                average: Utils.average(scores.filter(score => score.cno === cno), 'degree')
+            })
         ).map(averageScore => scores.filter(score => averageScore.cno === score.cno && score.degree < averageScore.average)
         ).reduce((acc, cur) => acc.concat(cur), []);
 
