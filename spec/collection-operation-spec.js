@@ -652,7 +652,7 @@ describe('collection operation', function () {
             min: '1999-09-01'
         };
         
-       const sbirthdayOfStudents = students.map(student => student.sbirthday.replace(/-/g, ''));
+        const sbirthdayOfStudents = students.map(student => student.sbirthday.replace(/-/g, ''));
         const maxSbirthday = Utils.min(sbirthdayOfStudents);
         const minSbirthday = Utils.max(sbirthdayOfStudents);
         const actual = {
@@ -692,7 +692,19 @@ describe('collection operation', function () {
     });
 
     test('查询和“李军”同性别的所有同学的Sname.', () => {
-        throw new Error();
+        const expected = [
+            { sname: '曾华'},
+            {sname: '匡明'},
+            {sname: '李军'},
+            {sname: '陆君'}
+        ];
+       const studentOfLiJun  = students.find(student => student.sname === '李军');
+        const actual = students.filter(student => student.ssex === studentOfLiJun.ssex)
+                .map(student => ({
+                    sname: student.sname
+                }));
+
+        expect(actual).to.deep.equalInAnyOrder(expected);
     });
 
     test('查询和“李军”同性别并同班的同学Sname.', () => {
