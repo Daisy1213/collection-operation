@@ -57,7 +57,7 @@ describe('collection operation', function () {
             {sno: 101, cno: '6-166', degree: 85}
         ];
 
-        const actual = scores.filter(score => score.degree === 85 || score.degree === 86 || score.degree === 88);
+        const actual = _.filter(scores, (n) => n.degree === 85 || n.degree === 86 || n.degree === 88);
         expect(actual).to.deep.equalInAnyOrder(expected);
     });
 
