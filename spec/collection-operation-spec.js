@@ -46,7 +46,7 @@ describe('collection operation', function () {
             {sno: 107, cno: '6-106', degree: 79},
         ];
 
-        const actual = scores.filter(score => score.degree > 60 && score.degree < 80);
+        const actual = _.filter(scores, (n) => n.degree > 60 && n.degree < 80);
         expect(actual).to.deep.equalInAnyOrder(expected);
     });
 
