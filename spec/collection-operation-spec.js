@@ -661,7 +661,7 @@ describe('collection operation', function () {
         };
 
         expect(actual).to.deep.equalInAnyOrder(expected);
-    });
+    });;
 
     test('以班号和年龄从大到小的顺序查询Student中的全部记录', () => {
         throw new Error();
@@ -676,9 +676,11 @@ describe('collection operation', function () {
         const actual = teachers.filter(teacher => teacher.tsex === '男')
             .map(teacher => {
                 const coursOfMaleTeacher = courses.find(cours => cours.tno === teacher.tno);
-                return (Object.assign({},
-                    teacher,
-                    {cname: coursOfMaleTeacher.cname}));
+                return {
+                    ...teacher,
+                    cname: coursOfMaleTeacher.cname
+                };
+
             });
 
         expect(actual).to.deep.equalInAnyOrder(expected);
@@ -730,11 +732,11 @@ describe('collection operation', function () {
         ];
         const theCno = courses.find(cours => cours.cname === '计算机导论');
         const actual = scores.filter(score => score.cno === theCno.cno)
-                             .map((score => ({
-                                 ssex: students.find(student => student.sno === score.sno).ssex,
-                                 ...score
-                             })))
-                             .filter(student => student.ssex === '男');
+            .map((score => ({
+                ssex: students.find(student => student.sno === score.sno).ssex,
+                ...score
+            })))
+            .filter(student => student.ssex === '男');
 
         expect(actual).to.deep.equalInAnyOrder(expected);
     });
