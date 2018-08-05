@@ -111,7 +111,7 @@ describe('collection operation', function () {
     test('查询“95031”班的学生人数', () => {
         const expected = 3;
 
-        const actual = students.filter(student => student.class === 95031).length;
+        const actual = _.filter(students, (n) => n.class === 95031).length;
         expect(actual).equal(expected);
     });
 
